@@ -7,7 +7,7 @@ package Date::Language::French;
 use Date::Language ();
 use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW $VERSION);
 @ISA = qw(Date::Language);
-$VERSION = "1.02";
+$VERSION = "1.03";
 
 @DoW = qw(dimanche lundi mardi mercredi jeudi vendredi samedi);
 @MoY = qw(janvier février mars avril mai juin 
@@ -16,10 +16,7 @@ $VERSION = "1.02";
 @MoYs = map { substr($_,0,4) } @MoY; # 4 insteed of 3 'cause [juin] [juil]let
 @AMPM = qw(AM PM);
 
-@Dsuf = (qw(er e e e e e e e e e)) x 3;
-# Not need..
-# @Dsuf[11,12,13] = qw(th th th);
-# @Dsuf[30,31] = qw(th st);
+@Dsuf = ((qw(er e e e e e e e e e)) x 3, 'er')
 
 @MoY{@MoY}  = (0 .. scalar(@MoY));
 @MoY{@MoYs} = (0 .. scalar(@MoYs));
