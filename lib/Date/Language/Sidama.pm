@@ -1,45 +1,20 @@
 ##
-## Somali tables
+## Sidama tables
 ##
 
-package Date::Language::Somali;
+package Date::Language::Sidama;
 
 use Date::Language ();
 use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW $VERSION);
 @ISA = qw(Date::Language);
 $VERSION = "0.99";
 
-@DoW = qw(Axad Isniin Salaaso Arbaco Khamiis Jimco Sabti);
-@MoY = (
-"Bisha Koobaad",
-"Bisha Labaad",
-"Bisha Saddexaad",
-"Bisha Afraad",
-"Bisha Shanaad",
-"Bisha Lixaad",
-"Bisha Todobaad",
-"Bisha Sideedaad",
-"Bisha Sagaalaad",
-"Bisha Tobnaad",
-"Bisha Kow iyo Tobnaad",
-"Bisha Laba iyo Tobnaad"
-);
+@DoW = qw(Sambata Sanyo Maakisanyo Roowe Hamuse Arbe Qidaame);
+@MoY = qw(January February March April May June
+          July August September October November December);
 @DoWs = map { substr($_,0,3) } @DoW;
-@MoYs = (
-"Kob",
-"Lab",
-"Sad",
-"Afr",
-"Sha",
-"Lix",
-"Tod",
-"Sid",
-"Sag",
-"Tob",
-"KIT",
-"LIT"
-);
-@AMPM = qw(SN GN);
+@MoYs = map { substr($_,0,3) } @MoY;
+@AMPM = qw(soodo hawwaro);
 
 @Dsuf = (qw(th st nd rd th th th th th th)) x 3;
 @Dsuf[11,12,13] = qw(th th th);

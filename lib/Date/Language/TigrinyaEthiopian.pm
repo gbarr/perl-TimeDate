@@ -1,8 +1,8 @@
 ##
-## Amharic tables
+## Tigrinya-Ethiopian tables
 ##
 
-package Date::Language::Amharic;
+package Date::Language::TigrinyaEthiopian;
 
 use Date::Language ();
 use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW $VERSION);
@@ -11,13 +11,13 @@ $VERSION = "1.00";
 
 if ( $] >= 5.006 ) {
 @DoW = (
-"\x{12a5}\x{1211}\x{12f5}",
-"\x{1230}\x{129e}",
-"\x{121b}\x{12ad}\x{1230}\x{129e}",
+"\x{1230}\x{1295}\x{1260}\x{1275}",
+"\x{1230}\x{1291}\x{12ed}",
+"\x{1230}\x{1209}\x{1235}",
 "\x{1228}\x{1261}\x{12d5}",
-"\x{1210}\x{1219}\x{1235}",
-"\x{12d3}\x{122d}\x{1265}",
-"\x{1245}\x{12f3}\x{121c}"
+"\x{1213}\x{1219}\x{1235}",
+"\x{12d3}\x{122d}\x{1262}",
+"\x{1240}\x{12f3}\x{121d}"
 );
 @MoY = (
 "\x{1303}\x{1295}\x{12e9}\x{12c8}\x{122a}",
@@ -35,19 +35,22 @@ if ( $] >= 5.006 ) {
 );
 @DoWs = map { substr($_,0,3) } @DoW;
 @MoYs = map { substr($_,0,3) } @MoY;
-@AMPM = ( "\x{1320}\x{12cb}\x{1275}", "\x{12a8}\x{1230}\x{12d3}\x{1275}" );
+@AMPM = (
+"\x{1295}/\x{1230}",
+"\x{12F5}/\x{1230}"
+);
 
-@Dsuf = ("\x{129b}" x 31);
+@Dsuf = ("\x{12ed}" x 31);
 }
 else {
 @DoW = (
-"እሑድ",
-"ሰኞ",
-"ማክሰኞ",
+"ሰንበት",
+"ሰኑይ",
+"ሰሉስ",
 "ረቡዕ",
-"ሐሙስ",
-"ዓርብ",
-"ቅዳሜ"
+"ሓሙስ",
+"ዓርቢ",
+"ቀዳም"
 );
 @MoY = (
 "ጃንዩወሪ",
@@ -65,9 +68,12 @@ else {
 );
 @DoWs = map { substr($_,0,9) } @DoW;
 @MoYs = map { substr($_,0,9) } @MoY;
-@AMPM = ( "ጠዋት", "ከሰዓት" );
+@AMPM = (
+"ን/ሰ",
+"ድ/ሰ"
+);
 
-@Dsuf = ("ኛ" x 31);
+@Dsuf = ("ይ" x 31);
 }
 
 @MoY{@MoY}  = (0 .. scalar(@MoY));
