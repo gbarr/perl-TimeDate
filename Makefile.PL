@@ -5,7 +5,7 @@
 
 
 $DISTNAME = 'TimeDate';
-$VERSION  = "1.08";
+$VERSION  = "1.07";
 
 BEGIN { require 5.002 }
 

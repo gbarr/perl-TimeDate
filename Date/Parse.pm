@@ -1,6 +1,6 @@
 # Date::Parse
 #
-# Copyright (c) 1995-8 Graham Barr. All rights reserved. This program is free
+# Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
 # as Perl itself.
 
@@ -57,11 +57,11 @@ I am open to suggestions on this.
 
 =head1 AUTHOR
 
-Graham Barr <Graham.Barr@pobox.com>
+Graham Barr <Graham.Barr@tiuk.ti.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 1995-8 Graham Barr. All rights reserved. This program is free
+Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 software; you can redistribute it and/or modify it under the same terms
 as Perl itself.
 
@@ -78,7 +78,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = "2.09"; # $Id:$
+$VERSION = do { my @r=(q$Revision: 2.8 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
 
 my %month = (
 	january		=> 0,

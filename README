@@ -16,13 +16,13 @@ You install the library by running these commands:
    make test
    make install
 
-Please report any bugs/suggestions to <Graham.Barr@pobox.com>
+Please report any bugs/suggestions to <Graham.Barr@tiuk.ti.com>
 
-Copyright 1996-1998 Graham Barr. All rights reserved.
+Copyright 1996-1997 Graham Barr. All rights reserved.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 Share and Enjoy!
-Graham <Graham.Barr@pobox.com>
+Graham <Graham.Barr@tiuk.ti.com>
 

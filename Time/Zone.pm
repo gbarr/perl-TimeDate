@@ -33,7 +33,7 @@ C<tz_name()> determines the name of the timezone based on its offset
 
 =head1 AUTHORS
 
-Graham Barr <bodg@pobox.com>
+Graham Barr <bodg@tiuk.ti.com>
 David Muir Sharnoff <muir@idiom.com>
 Paul Foley <paul@ascent.com>
 
@@ -48,7 +48,7 @@ use vars qw(@ISA @EXPORT $VERSION @tz_local);
 
 @ISA = qw(Exporter);
 @EXPORT = qw(tz2zone tz_local_offset tz_offset tz_name);
-$VERSION = "2.07"; #$Id: //depot/TimeDate/Time/Zone.pm#3$
+$VERSION = do { my @r=(q$Revision: 2.6 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
 
 # Parts stolen from code by Paul Foley <paul@ascent.com>
 
@@ -253,12 +253,8 @@ sub tz_name (;$$)
 	$off = tz_offset()
 		unless(defined $off);
 
-	my $dstNow = (localtime(time))[8];
-
-	$dst = $dstNow
+	$dst = (localtime(time))[8]
 		unless(defined $dst);
-
-	$off += ($dst ? 3600 : 0) - ($dstNow ? 3600 : 0);
 
 	if (exists $dstZoneOff{$off} && ($dst || !exists $zoneOff{$off})) {
 		return $dstZoneOff{$off};

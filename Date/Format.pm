@@ -1,6 +1,6 @@
 # Date::Format
 #
-# Copyright (c) 1995-8 Graham Barr. All rights reserved. This program is free
+# Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
 # as Perl itself.
 
@@ -121,11 +121,11 @@ category of the program's locale.
 
 =head1 AUTHOR
 
-Graham Barr <Graham.Barr@pobox.com>
+Graham Barr <Graham.Barr@tiuk.ti.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 1995-8 Graham Barr. All rights reserved. This program is free
+Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 software; you can redistribute it and/or modify it under the same terms
 as Perl itself.
 
@@ -135,7 +135,7 @@ use     strict;
 use     vars qw(@EXPORT @ISA $VERSION);
 require Exporter;
 
-$VERSION = "2.09"; # $Id: //depot/TimeDate/Date/Format.pm#3$
+$VERSION = do { my @r=(q$Revision: 2.8 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
 @ISA     = qw(Exporter);
 @EXPORT  = qw(time2str strftime ctime asctime);
 
@@ -211,12 +211,11 @@ sub strftime
 
    $epoch = timegm(@{$time}->[0..5]);
 
-   my $t = $epoch + tz_offset($tzname) - tz_offset();
-   @$me = (gmtime($t),$t);
+   @$me = gmtime($epoch + tz_offset($tzname) - tz_offset());
   }
  else
   {
-   @$me = (@$time, timelocal(@{$time}[0..5]));
+   @$me = @$time;
    undef $epoch;
   }
 
@@ -241,11 +240,11 @@ sub time2str
 	unless($tzname =~ /\D/);
 
    $time += tz_offset($tzname);
-   @$me = (gmtime($time),$time);
+   @$me = gmtime($time);
   }
  else
   {
-   @$me = (localtime($time),$time);
+   @$me = localtime($time);
   }
  _subs($me,$fmt);
 }
@@ -329,7 +328,7 @@ sub format_Y { sprintf("%04d",$_[0]->[5] + 1900) }
 sub format_Z { defined $tzname ? $tzname : uc tz_name(undef, $_[0]->[8]); }
 
 sub format_z {
- my $o = defined $tzname ? tz_offset($tzname) : tz_offset($_[0]->[9]);
+ my $o = defined $tzname ? tz_offset($tzname) : tz_offset();
  sprintf("%+03d%02d", int($o / 3600), abs(int($o % 3600)));
 }
 

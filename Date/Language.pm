@@ -7,7 +7,7 @@ use     Carp;
 use     vars qw($VERSION @ISA);
 require Date::Format;
 
-$VERSION = "1.06"; #$Id: //depot/TimeDate/Date/Language.pm#4$
+$VERSION = do { my @r=(q$Revision: 1.5 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
 @ISA     = qw(Date::Format::Generic);
 
 sub new
