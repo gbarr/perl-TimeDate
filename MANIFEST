@@ -15,3 +15,4 @@ lib/Time/Zone.pm
 t/date.t
 t/getdate.t
 t/lang.t
+TimeDate.ppd
