@@ -1,3 +1,11 @@
+Change 731 on 2002/06/06 by <gbarr@pobox.com> (Graham Barr)
+
+	Fix pattern to allow single digits for month and day (eg '2002-6-1')
+
+Change 730 on 2002/06/03 by <gbarr@pobox.com> (Graham Barr)
+
+	Release 1.12
+
 Change 729 on 2002/06/03 by <gbarr@pobox.com> (Graham Barr)
 
 	Fix month name abbreviations
