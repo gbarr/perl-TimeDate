@@ -162,8 +162,10 @@ CONFIG: {
 	    "fst"  =>   +2*3600,  	 # French Summer
             "eest" =>   +3*3600,         # Eastern European Summer
 	    "wadt" =>   +8*3600,  	 # West Australian Daylight
+	    "kdt"  =>  +10*3600,	 # Korean Daylight
 	#   "cadt" =>  +10*3600+1800,	 # Central Australian Daylight
 	    "eadt" =>  +11*3600,  	 # Eastern Australian Daylight
+	    "nzd"  =>  +13*3600,  	 # New Zealand Daylight   
 	    "nzdt" =>  +13*3600,  	 # New Zealand Daylight   
 	);
 
@@ -179,6 +181,7 @@ CONFIG: {
 	#   "gst"       =>  -3*3600,	 # Greenland Standard
 	#   "nft"       =>  -3*3600-1800,# Newfoundland
 	#   "nst"       =>  -3*3600-1800,# Newfoundland Standard
+	    "ewt"       =>  -4*3600,	 # U.S. Eastern War Time
 	    "ast"       =>  -4*3600,	 # Atlantic Standard
 	    "est"       =>  -5*3600,	 # Eastern Standard
 	    "cst"       =>  -6*3600,	 # Central Standard
@@ -191,11 +194,15 @@ CONFIG: {
 	    "nt"	=> -11*3600,	 # Nome
 	    "idlw"	=> -12*3600,	 # International Date Line West
 	    "cet"	=>  +1*3600, 	 # Central European
+	    "mez"	=>  +1*3600, 	 # Central European (German)
+	    "ect"	=>  +1*3600, 	 # Central European (French)
 	    "met"	=>  +1*3600, 	 # Middle European
 	    "mewt"	=>  +1*3600, 	 # Middle European Winter
 	    "swt"	=>  +1*3600, 	 # Swedish Winter
+	    "set"	=>  +1*3600, 	 # Seychelles
 	    "fwt"	=>  +1*3600, 	 # French Winter
 	    "eet"	=>  +2*3600, 	 # Eastern Europe, USSR Zone 1
+	    "ukr"	=>  +2*3600, 	 # Ukraine
 	    "bt"	=>  +3*3600, 	 # Baghdad, USSR Zone 2
 	#   "it"	=>  +3*3600+1800,# Iran
 	    "zp4"	=>  +4*3600, 	 # USSR Zone 3
@@ -207,8 +214,10 @@ CONFIG: {
 	#   "sst"	=>  +7*3600, 	 # South Sumatra, USSR Zone 6
 	#   "jt"	=>  +7*3600+1800,# Java (3pm in Cronusland!)
 	    "wst"	=>  +8*3600, 	 # West Australian Standard
+	    "hkt"	=>  +8*3600, 	 # Hong Kong
 	    "cct"	=>  +8*3600, 	 # China Coast, USSR Zone 7
 	    "jst"	=>  +9*3600,	 # Japan Standard, USSR Zone 8
+	    "kst"	=>  +9*3600,	 # Korean Standard
 	#   "cast"	=>  +9*3600+1800,# Central Australian Standard
 	    "east"	=> +10*3600,	 # Eastern Australian Standard
 	    "gst"	=> +10*3600,	 # Guam Standard, USSR Zone 9

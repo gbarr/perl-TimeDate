@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#4 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#5 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -59,9 +59,9 @@ map { $day{substr($_,0,3)}   = $day{$_} }   keys %day;
 
 my $strptime = <<'ESQ';
  my %month = map { lc $_ } %$mon_ref;
- my $daypat = join("|", map { lc $_ } keys %$day_ref);
- my $monpat = join("|", keys %month);
- my $sufpat = join("|", map { lc $_ } @$suf_ref);
+ my $daypat = join("|", map { lc $_ } reverse sort keys %$day_ref);
+ my $monpat = join("|", reverse sort keys %month);
+ my $sufpat = join("|", reverse sort map { lc $_ } @$suf_ref);
 
  my %ampm = (
 	am => 0,
@@ -96,7 +96,7 @@ sub {
   }
   else {
 
-    if ($dtstr =~ s#[:\s](\d\d?):(\d\d)(:(\d\d)(?:\.\d+)?)?\s*([ap]\.?m\.?)?\s# #o) {
+    if ($dtstr =~ s#[:\s](\d\d?):(\d\d?)(:(\d\d?)(?:\.\d+)?)?\s*([ap]\.?m\.?)?\s# #o) {
       ($hh,$mm,$ss) = ($1,$2,$4 || 0);
       $merid = $ampm{$5} if $5;
     }
@@ -147,16 +147,34 @@ sub {
 
   $dst = 1 if $dtstr =~ s#\bdst\b##o;
 
-  if ($dtstr =~ s#\s"?(\w{3,})"?\s# #o) {
+  if ($dtstr =~ s#\s"?([a-z]{3,4})(dst|\d+[a-z]*|_[a-z]+)?"?\s# #o) {
+    $dst = 1 if $2 and $2 eq 'dst';
     $zone = tz_offset($1);
-    return unless(defined $zone);
+    return unless defined $zone;
   }
-  elsif ($dtstr =~ s#\s(?:gmt)?(([\-\+])\d\d?)(\d\d)?\s# #o) {
-    my $m = defined($3) ? $2 . $3 : 0;
-    $zone = 60 * ($m + (60 * $1));
+  elsif ($dtstr =~ s#\s([a-z]{3,4})?([\-\+]?)-?(\d\d?)(\d\d)?(00)?\s# #o) {
+    my $m = defined($4) ? "$2$4" : 0;
+    my $h = "$2$3";
+    $zone = defined($1) ? tz_offset($1) : 0;
+    return unless defined $zone;
+    $zone += 60 * ($m + (60 * $h));
   }
 
-  return if $dtstr =~ /\S/o;
+  if ($dtstr =~ /\S/) {
+    # now for some dumb dates
+    if ($dtstr =~ s/^\s*(ut?|z)\s*$//) {
+      $zone = 0;
+    }
+    elsif ($dtstr =~ s#\s([a-z]{3,4})?([\-\+]?)-?(\d\d?)(\d\d)?(00)?\s# #o) {
+      my $m = defined($4) ? "$2$4" : 0;
+      my $h = "$2$3";
+      $zone = defined($1) ? tz_offset($1) : 0;
+      return unless defined $zone;
+      $zone += 60 * ($m + (60 * $h));
+    }
+
+    return if $dtstr =~ /\S/o;
+  }
 
   if (defined $hh) {
     if ($hh == 12) {
@@ -226,18 +244,26 @@ sub str2time
  my $result;
 
  if (defined $zone) {
-   $result = timegm($ss,$mm,$hh,$day,$month,$year);
+   $result = eval {
+     local $SIG{__DIE__} = sub {}; # Ick!
+     timegm($ss,$mm,$hh,$day,$month,$year);
+   };
    return undef
-     if $result == -1
-        && join("",$ss,$mm,$hh,$day,$month,$year)
+     if !defined $result
+        or $result == -1
+           && join("",$ss,$mm,$hh,$day,$month,$year)
      	        ne "595923311169";
    $result -= $zone;
  }
  else {
-   $result = timelocal($ss,$mm,$hh,$day,$month,$year);
+   $result = eval {
+     local $SIG{__DIE__} = sub {}; # Ick!
+     timelocal($ss,$mm,$hh,$day,$month,$year);
+   };
    return undef
-     if $result == -1
-        && join("",$ss,$mm,$hh,$day,$month,$year)
+     if !defined $result
+        or $result == -1
+           && join("",$ss,$mm,$hh,$day,$month,$year)
      	        ne join("",(localtime(-1))[0..5]);
  }
 
@@ -340,5 +366,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#4 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#5 $
 
