@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#8 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#9 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -88,8 +88,8 @@ sub {
   $dtstr =~ s#($daypat)\s*(den\s)?# #o;
   # Time: 12:00 or 12:00:00 with optional am/pm
   
-  if ($dtstr =~ s/(\d{4})([-:]?)(\d\d)\2(\d\d)[Tt](\d\d)([-:]?)(\d\d)\6(\d\d)(?:[.,]\d+)?/ /) {
-    ($year,$month,$day,$hh,$mm,$ss) = ($1,$3-1,$4,$5,$7,$8);
+  if ($dtstr =~ s/(\d{4})([-:]?)(\d\d)\2(\d\d)[Tt](\d\d)(?:([-:]?)(\d\d)(?:\6(\d\d)(?:[.,]\d+)?)?)?\b/ /) {
+    ($year,$month,$day,$hh,$mm,$ss) = ($1,$3-1,$4,$5,$7 || 0,$8 || 0);
   }
   else {
 
@@ -364,5 +364,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#8 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#9 $
 
