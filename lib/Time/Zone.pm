@@ -48,7 +48,7 @@ use vars qw(@ISA @EXPORT $VERSION @tz_local);
 
 @ISA = qw(Exporter);
 @EXPORT = qw(tz2zone tz_local_offset tz_offset tz_name);
-$VERSION = "2.23";
+$VERSION = "2.24";
 
 # Parts stolen from code by Paul Foley <paul@ascent.com>
 
@@ -168,6 +168,7 @@ CONFIG: {
 	    "wadt" =>   +8*3600,  	 # West Australian Daylight
 	    "kdt"  =>  +10*3600,	 # Korean Daylight
 	#   "cadt" =>  +10*3600+1800,	 # Central Australian Daylight
+	    "aedt" =>  +11*3600,  	 # Eastern Australian Daylight
 	    "eadt" =>  +11*3600,  	 # Eastern Australian Daylight
 	    "nzd"  =>  +13*3600,  	 # New Zealand Daylight   
 	    "nzdt" =>  +13*3600,  	 # New Zealand Daylight   
@@ -227,6 +228,7 @@ CONFIG: {
 	    "jst"	=>  +9*3600,	 # Japan Standard, USSR Zone 8
 	    "kst"	=>  +9*3600,	 # Korean Standard
 	#   "cast"	=>  +9*3600+1800,# Central Australian Standard
+	    "aest"	=> +10*3600,	 # Eastern Australian Standard
 	    "east"	=> +10*3600,	 # Eastern Australian Standard
 	    "gst"	=> +10*3600,	 # Guam Standard, USSR Zone 9
 	    "nzt"	=> +12*3600,	 # New Zealand
