@@ -17,7 +17,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = "2.27";
+$VERSION = "2.28";
 
 my %month = (
 	january		=> 0,
@@ -139,6 +139,9 @@ sub {
     }
     elsif ($dtstr =~ s#($monpat)\s*(\d+)\s*($sufpat)?\s# #o) {
       ($month,$day) = ($month{$1},$2);
+    }
+    elsif ($dtstr =~ s#($monpat)([\/-])(\d+)[\/-]# #o) {
+      ($month,$day) = ($month{$1},$3);
     }
 
     # Date: 961212
