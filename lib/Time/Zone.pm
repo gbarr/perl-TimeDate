@@ -20,7 +20,7 @@ Time::Zone -- miscellaneous timezone manipulations routines
 This is a collection of miscellaneous timezone manipulation routines.
 
 C<tz2zone()> parses the TZ environment variable and returns a timezone
-string suitable for inclusion in L<date>-like output.  It opionally takes
+string suitable for inclusion in L<date(1)>-like output.  It opionally takes
 a timezone string, a time, and a is-dst flag.
 
 C<tz_local_offset()> determins the offset from GMT time in seconds.  It
