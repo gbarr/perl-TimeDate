@@ -15,6 +15,7 @@ $VERSION = "1.01";
 @DoW  = qw(Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag Søndag);
 @DoWs = qw(Søn Man Tir Ons Tor Fre Lør Søn);
 
+use Date::Language::English ();
 @AMPM =   @{Date::Language::English::AMPM};
 @Dsuf =   @{Date::Language::English::Dsuf};
 

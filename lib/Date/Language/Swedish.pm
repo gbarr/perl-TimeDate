@@ -19,6 +19,7 @@ $VERSION = "1.01";
 # the ordinals are not typically used in modern times
 @Dsuf = ('a' x 2, 'e' x 29);
 
+use Date::Language::English ();
 @AMPM =   @{Date::Language::English::AMPM};
 
 

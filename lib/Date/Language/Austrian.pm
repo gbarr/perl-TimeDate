@@ -15,6 +15,7 @@ $VERSION = "1.01";
 @DoW  = qw(Sonntag Montag Dienstag Mittwoch Donnerstag Freitag Samstag);
 @DoWs = qw(Son Mon Die Mit Don Fre Sam);
 
+use Date::Language::English ();
 @AMPM = @{Date::Language::English::AMPM};
 @Dsuf = @{Date::Language::English::Dsuf};
 
