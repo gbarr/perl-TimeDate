@@ -1,4 +1,4 @@
-# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#5 $
+# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#6 $
 #
 # Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -273,7 +273,7 @@ Date::Format - Date formating subroutines
 
 	use Date::Format;
 	
-	@lt = timelocal(time);
+	@lt = localtime(time);
 	
 	print time2str($template, time);
 	print strftime($template, @lt);
@@ -282,7 +282,7 @@ Date::Format - Date formating subroutines
 	print strftime($template, @lt, $zone);
 	
 	print ctime(time);
-	print ascctime(@lt);
+	print asctime(@lt);
 	
 	print ctime(time, $zone);
 	print asctime(@lt, $zone);
