@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#5 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#6 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -124,6 +124,7 @@ sub {
 	$year = $5;
 	# Possible match for 1995-01-24 (short mainframe date format);
 	($year,$month,$day) = ($1, $3 - 1, $5) if $month > 12;
+	return if length($year) > 2 and $year < 1901;
       }
     }
     elsif ($dtstr =~ s#\s(\d+)\s*($sufpat)?\s*($monpat)# #o) {
@@ -366,5 +367,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#5 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#6 $
 
