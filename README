@@ -1,4 +1,5 @@
-This is the perl5 TimeDate distribution
+This is the perl5 TimeDate distribution. It requires perl version 5.003
+or later
 
 This distribution replaces my earlier GetDate distribution, which was
 only a date parser. The date parser contained in this distribution

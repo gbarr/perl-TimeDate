@@ -7,7 +7,7 @@
 
 use  Date::Parse;
 
-$data = qq!1995-01-24                ;790905600
+$data = qq!1995-01-24                ;790909200
 1995-06-24                           ;803952000
 1995-01-24  GMT                      ;790905600
 1995-01-24  BST                      ;790902000
@@ -137,8 +137,9 @@ foreach (@data){
         # The first two tests are parsed in the current time zone
         # But the check number is in GMT
 
-        my @lt = localtime($time);
-        my @gt = gmtime($time);
+	my $t = time;
+        my @lt = localtime($t);
+        my @gt = gmtime($t);
 
         $tzsec = ($gt[1] - $lt[1]) * 60 + ($gt[2] - $lt[2]) * 3600;
 

@@ -125,7 +125,7 @@ Graham Barr <Graham.Barr@tiuk.ti.com>
 
 =head1 REVISION
 
-$Revision: 2.5 $
+$Revision: 2.6 $
 
 =head1 COPYRIGHT
 
@@ -139,7 +139,7 @@ use     strict;
 use     vars qw(@EXPORT @ISA $VERSION);
 require Exporter;
 
-$VERSION = sprintf("%d.%02d", q$Revision: 2.5 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 2.6 $ =~ /(\d+)\.(\d+)/);
 @ISA     = qw(Exporter);
 @EXPORT  = qw(time2str strftime ctime asctime);
 
@@ -189,7 +189,11 @@ sub asctime
 
 sub _subs
 {
- $_[1] =~ s,%([%a-zA-Z]), $1 eq '%' ? '%' : $_[0]->$1() ,sgeo;
+ $_[1] =~ s/
+		%([%a-zA-Z])
+	   /
+		my $m = "format_$1"; $_[0]->$m();
+	   /sgeox;
 
  $_[1];
 }
@@ -297,66 +301,62 @@ sub wkyr {
 ## specific packages
 ##
 
-sub a { $DoWs[$_[0]->[6]] }
-sub A { $DoW[$_[0]->[6]] }
-sub b { $MoYs[$_[0]->[4]] }
-sub B { $MoY[$_[0]->[4]] }
-sub h { $MoYs[$_[0]->[4]] }
-sub p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
+sub format_a { $DoWs[$_[0]->[6]] }
+sub format_A { $DoW[$_[0]->[6]] }
+sub format_b { $MoYs[$_[0]->[4]] }
+sub format_B { $MoY[$_[0]->[4]] }
+sub format_h { $MoYs[$_[0]->[4]] }
+sub format_p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
 
-sub d { sprintf("%02d",$_[0]->[3]) }
-sub e { sprintf("%2d",$_[0]->[3]) }
-sub H { sprintf("%02d",$_[0]->[2]) }
-sub I { sprintf("%02d",$_[0]->[2] % 12 || 12)}
-sub j { sprintf("%03d",$_[0]->[7] + 1) }
-sub k { sprintf("%2d",$_[0]->[2]) }
-sub l { sprintf("%2d",$_[0]->[2] % 12 || 12)}
-sub m { sprintf("%02d",$_[0]->[4] + 1) }
-sub M { sprintf("%02d",$_[0]->[1]) }
-sub s { 
+sub format_d { sprintf("%02d",$_[0]->[3]) }
+sub format_e { sprintf("%2d",$_[0]->[3]) }
+sub format_H { sprintf("%02d",$_[0]->[2]) }
+sub format_I { sprintf("%02d",$_[0]->[2] % 12 || 12)}
+sub format_j { sprintf("%03d",$_[0]->[7] + 1) }
+sub format_k { sprintf("%2d",$_[0]->[2]) }
+sub format_l { sprintf("%2d",$_[0]->[2] % 12 || 12)}
+sub format_m { sprintf("%02d",$_[0]->[4] + 1) }
+sub format_M { sprintf("%02d",$_[0]->[1]) }
+sub format_s { 
    $epoch = timegm(@{$_[0]}->[0..5])
 	unless defined $epoch;
    sprintf("%d",$epoch) 
 }
-sub S { sprintf("%02d",$_[0]->[0]) }
-sub U { wkyr(0, $_[0]->[6], $_[0]->[7]) }
-sub w { $_[0]->[6] }
-sub W { wkyr(1, $_[0]->[6], $_[0]->[7]) }
-sub y { sprintf("%02d",$_[0]->[5] % 100) }
-sub Y { sprintf("%04d",$_[0]->[5] + 1900) }
-sub Z { defined $tzname ? $tzname : uc tz_name(undef, $_[0]->[8]); }
+sub format_S { sprintf("%02d",$_[0]->[0]) }
+sub format_U { wkyr(0, $_[0]->[6], $_[0]->[7]) }
+sub format_w { $_[0]->[6] }
+sub format_W { wkyr(1, $_[0]->[6], $_[0]->[7]) }
+sub format_y { sprintf("%02d",$_[0]->[5] % 100) }
+sub format_Y { sprintf("%04d",$_[0]->[5] + 1900) }
+sub format_Z { defined $tzname ? $tzname : uc tz_name(undef, $_[0]->[8]); }
 
-sub z {
+sub format_z {
  my $o = defined $tzname ? tz_offset($tzname) : tz_offset();
  sprintf("%+03d%02d", int($o / 3600), abs(int($o % 3600)));
 }
 
-sub c { &x . " " . &X }
-sub D { &m . "/" . &d . "/" . &y  }      
-sub r { &I . ":" . &M . ":" . &S . " " . &p  }   
-sub R { &H . ":" . &M }
-sub T { &H . ":" . &M . ":" . &S }
-sub t { "\t" }
-sub n { "\n" }
-sub o { sprintf("%2d%s",$_[0]->[3],$Dsuf[$_[0]->[3]]) }
-sub x { my $f = $format{'x'}; _subs(shift,$f); }
-sub X { my $f = $format{'X'}; _subs(shift,$f); }
-sub C { my $f = $format{'C'}; _subs(shift,$f); }
+sub format_c { &format_x . " " . &format_X }
+sub format_D { &format_m . "/" . &format_d . "/" . &format_y  }      
+sub format_r { &format_I . ":" . &format_M . ":" . &format_S . " " . &format_p  }   
+sub format_R { &format_H . ":" . &format_M }
+sub format_T { &format_H . ":" . &format_M . ":" . &format_S }
+sub format_t { "\t" }
+sub format_n { "\n" }
+sub format_o { sprintf("%2d%s",$_[0]->[3],$Dsuf[$_[0]->[3]]) }
+sub format_x { my $f = $format{'x'}; _subs($_[0],$f); }
+sub format_X { my $f = $format{'X'}; _subs($_[0],$f); }
+sub format_C { my $f = $format{'C'}; _subs($_[0],$f); }
 
-sub AUTOLOAD
+##
+## The unused chars
+##
+
+foreach (qw(f g i q u v E F G J K L N O P Q V %))
 {
- use vars qw($AUTOLOAD);
-
- if($AUTOLOAD =~ /::(\w)\Z/)
-  {
-   no strict qw(refs);
-
-   my $x = $1;
-   *{$x} = sub { $x };
-   goto &{$x};
-  }
-
- die "$AUTOLOAD not defined in Date::Language::Generic";
+ no strict;
+ next if defined &{$_};
+ my $x = $_;
+ *{"format_$_"} = sub { $x };
 }
 
 1;

@@ -3,10 +3,11 @@ package Date::Language;
 
 use     strict;
 use     Time::Local;
+use     Carp;
 use     vars qw($VERSION @ISA);
 require Date::Format;
 
-$VERSION = do { my @r=(q$Revision: 1.2 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
+$VERSION = do { my @r=(q$Revision: 1.4 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
 @ISA     = qw(Date::Format::Generic);
 
 sub new
@@ -20,31 +21,30 @@ sub new
  bless [], $type;
 }
 
-sub _strptime
-{
- my $self = $_[0];
- my $type = ref($self) || $self;
- require Date::Parse;
-
- no strict 'refs';
- *{"${type}::strptime"} = Date::Parse::gen_parser(
-	\%{"${type}::DoW"},
-	\%{"${type}::MoY"},
-	\@{"${type}::Dsuf"},
-	1);
-
- goto &{"${type}::strptime"};
-}
+# Stop AUTOLOAD being called ;-)
+sub DESTROY {}
 
 sub AUTOLOAD
 {
  use vars qw($AUTOLOAD);
 
- goto &_strptime
-	if $AUTOLOAD =~ /::strptime\Z/o;
+ if($AUTOLOAD =~ /::strptime\Z/o)
+  {
+   my $self = $_[0];
+   my $type = ref($self) || $self;
+   require Date::Parse;
 
- $Date: 1996/07/02 07:33:51 $AUTOLOAD;
- goto &Date::Format::Generic::AUTOLOAD;
+   no strict 'refs';
+   *{"${type}::strptime"} = Date::Parse::gen_parser(
+	\%{"${type}::DoW"},
+	\%{"${type}::MoY"},
+	\@{"${type}::Dsuf"},
+	1);
+
+   goto &{"${type}::strptime"};
+  }
+
+ croak "Undefined method &$AUTOLOAD called";
 }
 
 sub str2time
@@ -102,12 +102,12 @@ use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW);
 
 # Formatting routines
 
-sub a { $DoWs[$_[0]->[6]] }
-sub A { $DoW[$_[0]->[6]] }
-sub b { $MoYs[$_[0]->[4]] }
-sub B { $MoY[$_[0]->[4]] }
-sub h { $MoYs[$_[0]->[4]] }
-sub p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
+sub format_a { $DoWs[$_[0]->[6]] }
+sub format_A { $DoW[$_[0]->[6]] }
+sub format_b { $MoYs[$_[0]->[4]] }
+sub format_B { $MoY[$_[0]->[4]] }
+sub format_h { $MoYs[$_[0]->[4]] }
+sub format_p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
 
 ##
 ## German tables
@@ -134,12 +134,44 @@ use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW);
 
 # Formatting routines
 
-sub a { $DoWs[$_[0]->[6]] }
-sub A { $DoW[$_[0]->[6]] }
-sub b { $MoYs[$_[0]->[4]] }
-sub B { $MoY[$_[0]->[4]] }
-sub h { $MoYs[$_[0]->[4]] }
-sub p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
+sub format_a { $DoWs[$_[0]->[6]] }
+sub format_A { $DoW[$_[0]->[6]] }
+sub format_b { $MoYs[$_[0]->[4]] }
+sub format_B { $MoY[$_[0]->[4]] }
+sub format_h { $MoYs[$_[0]->[4]] }
+sub format_p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
+
+##
+## Norwegian tables
+##
+
+package Date::Language::Norwegian;
+
+use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW);
+@ISA = qw(Date::Language);
+
+@MoY  = qw(Januar Februar Mars April Mai Juni
+	   Juli August September Oktober November Desember);
+@MoYs = qw(Jan Feb Mar Apr Mai Jun Jul Aug Sep Okt Nov Des);
+@DoW  = qw(Søndag Mandag Tirsdag Onsdag Torsdag Fredag Lørdag Søndag);
+@DoWs = qw(Søn Man Tir Ons Tor Fre Lør Søn);
+
+@AMPM =   @{Date::Language::English::AMPM};
+@Dsuf =   @{Date::Language::English::Dsuf};
+
+@MoY{@MoY}  = (0 .. scalar(@MoY));
+@MoY{@MoYs} = (0 .. scalar(@MoYs));
+@DoW{@DoW}  = (0 .. scalar(@DoW));
+@DoW{@DoWs} = (0 .. scalar(@DoWs));
+
+# Formatting routines
+
+sub format_a { $DoWs[$_[0]->[6]] }
+sub format_A { $DoW[$_[0]->[6]] }
+sub format_b { $MoYs[$_[0]->[4]] }
+sub format_B { $MoY[$_[0]->[4]] }
+sub format_h { $MoYs[$_[0]->[4]] }
+sub format_p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
 
 ##
 ## Italian tables
@@ -166,12 +198,12 @@ use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW);
 
 # Formatting routines
 
-sub a { $DoWs[$_[0]->[6]] }
-sub A { $DoW[$_[0]->[6]] }
-sub b { $MoYs[$_[0]->[4]] }
-sub B { $MoY[$_[0]->[4]] }
-sub h { $MoYs[$_[0]->[4]] }
-sub p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
+sub format_a { $DoWs[$_[0]->[6]] }
+sub format_A { $DoW[$_[0]->[6]] }
+sub format_b { $MoYs[$_[0]->[4]] }
+sub format_B { $MoY[$_[0]->[4]] }
+sub format_h { $MoYs[$_[0]->[4]] }
+sub format_p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
 
 ##
 ## Austrian tables
@@ -198,12 +230,12 @@ use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW);
 
 # Formatting routines
 
-sub a { $DoWs[$_[0]->[6]] }
-sub A { $DoW[$_[0]->[6]] }
-sub b { $MoYs[$_[0]->[4]] }
-sub B { $MoY[$_[0]->[4]] }
-sub h { $MoYs[$_[0]->[4]] }
-sub p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
+sub format_a { $DoWs[$_[0]->[6]] }
+sub format_A { $DoW[$_[0]->[6]] }
+sub format_b { $MoYs[$_[0]->[4]] }
+sub format_B { $MoY[$_[0]->[4]] }
+sub format_h { $MoYs[$_[0]->[4]] }
+sub format_p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
 
 1;
 

@@ -1,3 +1,12 @@
+Wed 31 Jul 1996 <bodg@tiuk.ti.com>
+
+	o Release 1.05
+	o Modified Date::Format not to use single letter sub names,
+	  all format sub names are nore prefixed with format_
+	o Cleaned up Date/Format.pm so that AUTOLOAD is not required
+	o Patched Date/Language.pm to add Norwegian. Thanks to
+	  Gisle Aas <aas@bergen.sn.no> for the patch
+
 Thu 27 Jun 1996 <bodg@tiuk.ti.com>
 
 	o Added %z to Date::Format to output timezone in +/-0000 format

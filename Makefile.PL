@@ -1,12 +1,15 @@
 # This -*- perl -*- script makes the Makefile
 
+BEGIN { require 5.002 }
+
 use ExtUtils::MakeMaker;
 
 $DISTNAME = 'TimeDate';
-$VERSION = "1.04";
+$VERSION = "1.05";
 $RELTYPE  = "";
 
 WriteMakefile(
+	      NAME	=> $DISTNAME,
 	      VERSION	=> $VERSION . $RELTYPE,
 	      DISTNAME	=> $DISTNAME,
 	      PMLIBDIRS	=> [q[Date], q[Time]],
