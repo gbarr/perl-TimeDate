@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#12 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#13 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -88,7 +88,7 @@ sub {
   $dtstr =~ s#($daypat)\s*(den\s)?# #o;
   # Time: 12:00 or 12:00:00 with optional am/pm
   
-  if ($dtstr =~ s/(?<!\S)(\d{4})([-:]?)(\d\d?)\2(\d\d?)(?:[Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\6(\d\d?)(?:[.,]\d+)?)?)?)?\b/ /) {
+  if ($dtstr =~ s/(?:^|\s)(\d{4})([-:]?)(\d\d?)\2(\d\d?)(?:[Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\6(\d\d?)(?:[.,]\d+)?)?)?)?\b/ /) {
     ($year,$month,$day,$hh,$mm,$ss) = ($1,$3-1,$4,$5,$7,$8);
   }
   else {
@@ -203,10 +203,11 @@ sub gen_parser
    substr($obj_strptime,index($strptime,"sub")+6,0) = <<'ESQ';
  shift; # package
 ESQ
-   return eval "$obj_strptime";
+   my $sub = eval "$obj_strptime" or die $@;
+   return $sub;
   }
 
- eval "$strptime";
+ eval "$strptime" or die $@;
 
 }
 
@@ -364,5 +365,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#12 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#13 $
 
