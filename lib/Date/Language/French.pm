@@ -17,7 +17,7 @@ $VERSION = "1.04";
 $MoYs[6] = 'jul';
 @AMPM = qw(AM PM);
 
-@Dsuf = ((qw(er e e e e e e e e e)) x 3, 'er')
+@Dsuf = ((qw(er e e e e e e e e e)) x 3, 'er');
 
 @MoY{@MoY}  = (0 .. scalar(@MoY));
 @MoY{@MoYs} = (0 .. scalar(@MoYs));
