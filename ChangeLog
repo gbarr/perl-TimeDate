@@ -1,3 +1,29 @@
+Change 729 on 2002/06/03 by <gbarr@pobox.com> (Graham Barr)
+
+	Fix month name abbreviations
+
+Change 720 on 2002/04/25 by <gbarr@pobox.com> (Graham Barr)
+
+	Date::Parse
+	- Make it work with 5.004 again
+
+Change 719 on 2002/04/25 by <gbarr@pobox.com> (Graham Barr)
+
+	Prevent the ISO date pattern matching where it should not. ie there must not
+	be a non-space character directly before the date string
+
+Change 718 on 2002/04/17 by <gbarr@pobox.com> (Graham Barr)
+
+	Change French @Dsuf, from Peter Samuelson <peter@cadcamlab.org>
+
+Change 712 on 2002/03/07 by <gbarr@pobox.com> (Graham Barr)
+
+	Added %L format for month number as 1..12 from Adam Monsen
+
+Change 708 on 2002/02/28 by <gbarr@pobox.com> (Graham Barr)
+
+	Release 1.11
+
 Change 707 on 2002/02/28 by <gbarr@pobox.com> (Graham Barr)
 
 	Fix format error in t/date.t
