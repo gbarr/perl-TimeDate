@@ -18,6 +18,7 @@ lib/Date/Language/French.pm
 lib/Date/Language/Gedeo.pm
 lib/Date/Language/German.pm
 lib/Date/Language/Greek.pm
+lib/Date/Language/Icelandic.pm
 lib/Date/Language/Italian.pm
 lib/Date/Language/Norwegian.pm
 lib/Date/Language/Oromo.pm
