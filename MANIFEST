@@ -24,6 +24,7 @@ lib/Date/Language/Norwegian.pm
 lib/Date/Language/Oromo.pm
 lib/Date/Language/Sidama.pm
 lib/Date/Language/Somali.pm
+lib/Date/Language/Spanish.pm
 lib/Date/Language/Swedish.pm
 lib/Date/Language/Tigrinya.pm
 lib/Date/Language/TigrinyaEritrean.pm
