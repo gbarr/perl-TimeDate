@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#20 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#21 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -320,19 +320,10 @@ failure.
 =head1 MULTI-LANGUAGE SUPPORT
 
 Date::Parse is capable of parsing dates in several languages, these are
-English, French, German and Italian. Changing the language is done via
-a static method call, for example
-
-	Date::Parse->language('German');
-
-will cause Date::Parse to attempt to parse any subsequent dates in German.
-
-This is only a first pass, I am considering changing this to be
+English, French, German and Italian.
 
 	$lang = Date::Language->new('German');
 	$lang->str2time("25 Jun 1996 21:09:55 +0100");
-
-I am open to suggestions on this.
 
 =head1 EXAMPLE DATES
 
@@ -381,5 +372,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#20 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#21 $
 
