@@ -1,0 +1,9 @@
+ChangeLog
+Date/Format.pm			(v2.02) Date formatter
+Date/Parse.pm			(v2.03) Date parser
+Local.pm.new			Patched version of Time::Local
+MANIFEST
+Makefile.PL
+README
+Time/Zone.pm			(v2.01) Time zone routines
+t/date.t

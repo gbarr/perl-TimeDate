@@ -1,0 +1,14 @@
+Wed 22 May 1996 <bodg@tiuk.ti.com>
+
+	o Fixed a bug in the parser for dates in a default (local) timezone
+	  but a different dst
+
+Wed 15 May 1996 <bodg@tiuk.ti.com>
+
+    	o Added support for mainframe type dates
+
+Fri  3 May 1996 <bodg@tiuk.ti.com>
+
+	o Added %s to date formatting at request of Josh Osborne
+	  <stripes@va.pubnix.com>.
+
