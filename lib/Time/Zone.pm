@@ -48,7 +48,7 @@ use vars qw(@ISA @EXPORT $VERSION @tz_local);
 
 @ISA = qw(Exporter);
 @EXPORT = qw(tz2zone tz_local_offset tz_offset tz_name);
-$VERSION = "2.20";
+$VERSION = "2.21";
 
 # Parts stolen from code by Paul Foley <paul@ascent.com>
 
@@ -160,6 +160,7 @@ CONFIG: {
 	    "mest" =>   +2*3600,  	 # Middle European Summer   
 	    "sst"  =>   +2*3600,  	 # Swedish Summer
 	    "fst"  =>   +2*3600,  	 # French Summer
+            "cest" =>   +2*3600,         # Central European Daylight
             "eest" =>   +3*3600,         # Eastern European Summer
 	    "wadt" =>   +8*3600,  	 # West Australian Daylight
 	    "kdt"  =>  +10*3600,	 # Korean Daylight
