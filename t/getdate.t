@@ -134,6 +134,8 @@ my $offset = Time::Local::timegm(0,0,0,1,0,70);
 print "1..", scalar(@data),"\n";
 $loop = 1;
 
+printf "# offset = %d\n", $offset;
+
 foreach (@data){
     my($str,$time_expect) = split ';', $_;
     my $time = Date::Parse::str2time($str);
@@ -168,10 +170,10 @@ foreach (@data){
     }
     else {
         require Date::Format;
-        print $str,"\t",$time_expect,"\t",$time,"\n";
-        print Date::Format::ctime($time);
-        print Date::Format::ctime($time_expect);
-	print "FAIL $loop\n";
+	print "-"x50,"\nFAIL $loop\n";
+        printf "%s\nDiff:    %d\n", $str, $time - $time_expect;
+        printf "Expect: %10d %s",$time_expect,Date::Format::ctime($time_expect);
+        printf "Got:    %10d %s",$time, Date::Format::ctime($time);
     }
     $loop++;
 }

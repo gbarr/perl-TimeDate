@@ -1,11 +1,17 @@
-ChangeLog
-Date/Format.pm			(v2.06) Date formatter
-Date/Language.pm		(v1.04) 
-Date/Parse.pm			(v2.05) Date parser
 MANIFEST
 Makefile.PL
 README
-Time/Zone.pm			(v2.02) Time zone routines
+lib/Date/Format.pm
+lib/Date/Language.pm
+lib/Date/Language/Austrian.pm
+lib/Date/Language/Czech.pm
+lib/Date/Language/English.pm
+lib/Date/Language/French.pm
+lib/Date/Language/German.pm
+lib/Date/Language/Italian.pm
+lib/Date/Language/Norwegian.pm
+lib/Date/Parse.pm
+lib/Time/Zone.pm
 t/date.t
 t/getdate.t
 t/lang.t
