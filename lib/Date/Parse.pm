@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#16 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#17 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -153,7 +153,7 @@ sub {
     $zone = tz_offset($1);
     return unless defined $zone;
   }
-  elsif ($dtstr =~ s#\s([a-z]{3,4})?([\-\+]?)-?(\d\d?)(\d\d)?(00)?\s# #o) {
+  elsif ($dtstr =~ s#\s([a-z]{3,4})?([\-\+]?)-?(\d\d?):?(\d\d)?(00)?\s# #o) {
     my $m = defined($4) ? "$2$4" : 0;
     my $h = "$2$3";
     $zone = defined($1) ? tz_offset($1) : 0;
@@ -373,5 +373,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#16 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#17 $
 
