@@ -1,10 +1,10 @@
 # This -*- perl -*- script makes the Makefile
-# $Id: //depot/TimeDate/Makefile.PL#9 $
+# $Id: //depot/TimeDate/Makefile.PL#10 $
 
 #--- Distribution section ---
 
 $DISTNAME = 'TimeDate';
-$VERSION  = "1.14";
+$VERSION  = "1.15";
 
 #--- Write the Makefile
 
