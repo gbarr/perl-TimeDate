@@ -57,7 +57,7 @@ I am open to suggestions on this.
 
 =head1 AUTHOR
 
-Graham Barr <Graham.Barr@tiuk.ti.com>
+Graham Barr <gbarr@pobox.com>
 
 =head1 COPYRIGHT
 
@@ -78,7 +78,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = do { my @r=(q$Revision: 2.8 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
+$VERSION = "2.09";
 
 my %month = (
 	january		=> 0,
@@ -220,9 +220,9 @@ sub
    return ()
     unless(defined $zone);
   }
- elsif($dtstr =~ s#\s(([\-\+])\d\d?)(\d\d)\s# #o)
+ elsif($dtstr =~ s#\s(?:gmt)?(([\-\+])\d\d?)(\d\d)?\s# #o)
   {
-   my $m = $2 . $3;
+   my $m = defined($3) ? $2 . $3 : 0;
    $zone = 60 * ($m + (60 * $1));
   }
 
