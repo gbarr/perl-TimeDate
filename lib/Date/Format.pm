@@ -1,4 +1,4 @@
-# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#7 $
+# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#8 $
 #
 # Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -10,7 +10,7 @@ use     strict;
 use     vars qw(@EXPORT @ISA $VERSION);
 require Exporter;
 
-$VERSION = "2.21";
+$VERSION = "2.22";
 @ISA     = qw(Exporter);
 @EXPORT  = qw(time2str strftime ctime asctime);
 
@@ -211,6 +211,7 @@ sub format_I { sprintf("%02d",$_[0]->[2] % 12 || 12)}
 sub format_j { sprintf("%03d",$_[0]->[7] + 1) }
 sub format_k { sprintf("%2d",$_[0]->[2]) }
 sub format_l { sprintf("%2d",$_[0]->[2] % 12 || 12)}
+sub format_L { $_[0]->[4] + 1 }
 sub format_m { sprintf("%02d",$_[0]->[4] + 1) }
 sub format_M { sprintf("%02d",$_[0]->[1]) }
 sub format_q { sprintf("%01d",int($_[0]->[4] / 3) + 1) }
@@ -358,7 +359,8 @@ category of the program's locale.
 	%j 	day of the year
 	%k 	hour
 	%l 	hour, 12 hour clock
-	%m 	month number, starting with 1
+	%L 	month number, starting with 1
+	%m 	month number, starting with 01
 	%M 	minute, leading 0's
 	%n 	NEWLINE
 	%o	ornate day of month -- "1st", "2nd", "25th", etc.
