@@ -1,10 +1,11 @@
 ChangeLog
-Date/Format.pm			(v2.03) Date formatter
-Date/Parse.pm			(v2.04) Date parser
+Date/Format.pm			(v2.05) Date formatter
+Date/Language.pm		(v1.02) 
+Date/Parse.pm			(v2.05) Date parser
 Local.pm.new			Patched version of Time::Local
 MANIFEST
 Makefile.PL
 README
-Time/Zone.pm			(v2.01) Time zone routines
+Time/Zone.pm			(v2.02) Time zone routines
 t/date.t
 t/getdate.t

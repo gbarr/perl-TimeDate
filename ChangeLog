@@ -1,3 +1,8 @@
+Thu 27 Jun 1996 <bodg@tiuk.ti.com>
+
+	o Added %z to Date::Format to output timezone in +/-0000 format
+	o Added multi-language support via Date::Language,.
+
 Tue 25 Jun 1996 <bodg@tiuk.ti.com>
 
         o Some code tidying up

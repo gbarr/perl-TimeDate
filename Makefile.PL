@@ -3,7 +3,7 @@
 use ExtUtils::MakeMaker;
 
 $DISTNAME = 'TimeDate';
-$VERSION = "1.03";
+$VERSION = "1.04";
 $RELTYPE  = "";
 
 WriteMakefile(

@@ -38,13 +38,30 @@ if they could be extracted from the date string. The C<$zone> element is
 the timezone offset in seconds from GMT. An empty array is returned upon
 failure.
 
+=head1 MULTI-LANGUAGE SUPPORT
+
+Date::Parse is capable of parsing dates in several languages, these are
+English, French, German and Italian. Changing the language is done via
+a static method call, for example
+
+	Date::Parse->language('German');
+
+will cause Date::Parse to attempt to parse any subsequent dates in German.
+
+This is only a first pass, I am considering changing this to be
+
+	$lang = Date::Language->new('German');
+	$lang->str2time("25 Jun 1996 21:09:55 +0100");
+
+I am open to suggestions on this.
+
 =head1 AUTHOR
 
 Graham Barr <Graham.Barr@tiuk.ti.com>
 
 =head1 REVISION
 
-$Revision: 2.4 $
+$Revision: 2.5 $
 
 =head1 COPYRIGHT
 
@@ -63,11 +80,9 @@ use Time::Zone;
 use Exporter;
 
 @ISA = qw(Exporter);
-@EXPORT = qw( &strtotime &str2time);
+@EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = sprintf("%d.%02d", q$Revision: 2.4 $ =~ m#(\d+)\.(\d+)#);
-
-my($AM, $PM) = (0,12);
+$VERSION = sprintf("%d.%02d", q$Revision: 2.5 $ =~ m#(\d+)\.(\d+)#);
 
 my %month = (
 	january		=> 0,
@@ -89,36 +104,44 @@ my %day = (
 	sunday		=> 0,
 	monday		=> 1,
 	tuesday		=> 2,
-	tues		=> 3,
-	wednesday	=> 4,
-	wednes		=> 4,
-	thursday	=> 5,
-	thur		=> 5,
-	thurs		=> 5,
-	friday		=> 6,
-	saturday	=> 7,
+	tues		=> 2,
+	wednesday	=> 3,
+	wednes		=> 3,
+	thursday	=> 4,
+	thur		=> 4,
+	thurs		=> 4,
+	friday		=> 5,
+	saturday	=> 6,
 	);
+
+my @suf = (qw(th st nd rd th th th th th th)) x 3;
+@suf[11,12,13] = qw(th th th);
 
 #Abbreviations
 
 map { $month{substr($_,0,3)} = $month{$_} } keys %month;
 map { $day{substr($_,0,3)}   = $day{$_} }   keys %day;
 
-my %ampm = (
+my $strptime = <<'ESQ';
+ my %month = map { lc $_ } %$mon_ref;
+ my $daypat = join("|", map { lc $_ } keys %$day_ref);
+ my $monpat = join("|", keys %month);
+ my $sufpat = join("|", map { lc $_ } @$suf_ref);
+
+ my %ampm = (
 	am => 0,
 	pm => 12
 	);
 
-# map am +. a.m.
-map { my($z) = $_; $z =~ s#(\w)#$1\.#g; $ampm{$z} = $ampm{$_} } keys %ampm;
+ # allow map am +. a.m.
+ map { my($z) = $_; $z =~ s#(\w)#$1\.#g; $ampm{$z} = $ampm{$_} } keys %ampm;
 
-my $daypat = join("|",keys %day);
-my $monpat = join("|",keys %month);
+ my($AM, $PM) = (0,12);
 
-sub strptime
+sub
 {
- my $dtstr = lc shift;
 
+ my $dtstr = lc shift;
  my $merid = 24;
 
  my($year,$month,$day,$hh,$mm,$ss,$zone) = (undef) x 7;
@@ -128,11 +151,11 @@ sub strptime
 
  while(1) { last unless($dtstr =~ s#\([^\(\)]*\)# #o) }
 
- $dtstr =~ s#(\A|\Z)# #og;
+ $dtstr =~ s#(\A|\n|\Z)# #sog;
 
  # ignore day names
- $dtstr =~ s#($daypat)\s*,?# #o;
-
+ $dtstr =~ s#([\d\w\s])[\.\,]\s#$1 #sog;
+ $dtstr =~ s#($daypat)\s*(den\s)?# #o;
  # Time: 12:00 or 12:00:00 with optional am/pm
   
  if($dtstr =~ s#[:\s](\d\d?):(\d\d)(:(\d\d)(?:\.\d+)?)?\s*([ap]\.?m\.?)?\s# #o)
@@ -171,16 +194,16 @@ sub strptime
     	    if($month > 12);
     }
   }
- elsif($dtstr =~ s#\s(\d+)\s*(st|nd|rd|th)?\s*($monpat)# #o)
+ elsif($dtstr =~ s#\s(\d+)\s*($sufpat)?\s*($monpat)# #o)
   {
    ($month,$day) = ($month{$3},$1);
   }
- elsif($dtstr =~ s#($monpat)\s*(\d+)\s*(st|nd|rd|th)?\s# #o)
+ elsif($dtstr =~ s#($monpat)\s*(\d+)\s*($sufpat)?\s# #o)
   {
    ($month,$day) = ($month{$1},$2);
   }
  $year = $1
-    if(!defined($year) && $dtstr =~ s#\s(\d{2}(\d{2})?)\s# #o);
+    if(!defined($year) && $dtstr =~ s#\s(\d{2}(\d{2})?)[\s\.,]# #o);
 
  # Zone
 
@@ -207,6 +230,28 @@ sub strptime
 
  return ($ss,$mm,$hh,$day,$month,$year,$zone);
 }
+ESQ
+
+use vars qw($day_ref $mon_ref $suf_ref $obj);
+
+sub gen_parser
+{
+ local($day_ref,$mon_ref,$suf_ref,$obj) = @_;
+
+ if($obj)
+  {
+   my $obj_strptime = $strptime;
+   substr($obj_strptime,index($strptime,"sub")+6,0) = <<'ESQ';
+ shift; # package
+ESQ
+   return eval "$obj_strptime";
+  }
+
+ eval "$strptime";
+
+}
+
+*strptime = gen_parser(\%day,\%month,\@suf);
 
 sub str2time
 {
@@ -236,5 +281,4 @@ sub str2time
 }
 
 1;
-
 
