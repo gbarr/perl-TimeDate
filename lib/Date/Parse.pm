@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#6 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#7 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -17,7 +17,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = "2.20";
+$VERSION = "2.21";
 
 my %month = (
 	january		=> 0,
@@ -91,7 +91,7 @@ sub {
   $dtstr =~ s#($daypat)\s*(den\s)?# #o;
   # Time: 12:00 or 12:00:00 with optional am/pm
   
-  if ($dtstr =~ s/(\d{4})([-:]?)(\d\d)\2(\d\d)[Tt](\d\d)([-:]?)(\d\d)\6(\d\d)/ /) {
+  if ($dtstr =~ s/(\d{4})([-:]?)(\d\d)\2(\d\d)[Tt](\d\d)([-:]?)(\d\d)\6(\d\d)(?:[.,]\d+)?/ /) {
     ($year,$month,$day,$hh,$mm,$ss) = ($1,$3-1,$4,$5,$7,$8);
   }
   else {
@@ -367,5 +367,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#6 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#7 $
 
