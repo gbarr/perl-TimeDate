@@ -1,4 +1,4 @@
-# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#6 $
+# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#7 $
 #
 # Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -85,7 +85,7 @@ sub strftime
    $tzname = sprintf("%+05d",$tzname)
 	unless($tzname =~ /\D/);
 
-   $epoch = timegm(@{$time}->[0..5]);
+   $epoch = timegm(@{$time}[0..5]);
 
    @$me = gmtime($epoch + tz_offset($tzname) - tz_offset());
   }
@@ -215,7 +215,7 @@ sub format_m { sprintf("%02d",$_[0]->[4] + 1) }
 sub format_M { sprintf("%02d",$_[0]->[1]) }
 sub format_q { sprintf("%01d",int($_[0]->[4] / 3) + 1) }
 sub format_s { 
-   $epoch = timegm(@{$_[0]}->[0..5])
+   $epoch = timegm(@{$_[0]}[0..5])
 	unless defined $epoch;
    sprintf("%d",$epoch) 
 }
