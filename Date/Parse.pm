@@ -1,6 +1,6 @@
 # Date::Parse
 #
-# Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
+# Copyright (c) 1995-8 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
 # as Perl itself.
 
@@ -57,15 +57,11 @@ I am open to suggestions on this.
 
 =head1 AUTHOR
 
-Graham Barr <Graham.Barr@tiuk.ti.com>
-
-=head1 REVISION
-
-$Revision: 2.6 $
+Graham Barr <Graham.Barr@pobox.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
+Copyright (c) 1995-8 Graham Barr. All rights reserved. This program is free
 software; you can redistribute it and/or modify it under the same terms
 as Perl itself.
 
@@ -82,7 +78,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = sprintf("%d.%02d", q$Revision: 2.6 $ =~ m#(\d+)\.(\d+)#);
+$VERSION = "2.09"; # $Id:$
 
 my %month = (
 	january		=> 0,
@@ -144,7 +140,7 @@ sub
  my $dtstr = lc shift;
  my $merid = 24;
 
- my($year,$month,$day,$hh,$mm,$ss,$zone) = (undef) x 7;
+ my($year,$month,$day,$hh,$mm,$ss,$zone,$dst) = (undef) x 8;
 
  $zone = tz_offset(shift)
     if(@_);
@@ -215,6 +211,9 @@ sub
 
  # Zone
 
+ $dst = 1
+	if $dtstr =~ s#\bdst\b##o;
+
  if($dtstr =~ s#\s"?(\w{3,})\s# #o) 
   {
    $zone = tz_offset($1);
@@ -230,11 +229,24 @@ sub
  return ()
     if($dtstr =~ /\S/o);
 
- $hh += 12
-	if(defined $hh && $merid == $PM);
+ if(defined $hh)
+  {
+   if($hh == 12)
+    {
+     $hh = 0
+	if $merid == $AM;
+    }
+   elsif($merid == $PM)
+    {
+     $hh += 12;
+    }
+  }
 
  $year -= 1900
 	if(defined $year && $year > 1900);
+
+ $zone += 3600
+	if(defined $zone && $dst);
 
  return ($ss,$mm,$hh,$day,$month,$year,$zone);
 }
@@ -283,6 +295,10 @@ sub str2time
 
  $year = ($month > $lt[4]) ? ($lt[5] - 1) : $lt[5]
 	unless(defined $year);
+
+ return undef
+	unless($month <= 11 && $day >= 1 && $day <= 31
+		&& $hh <= 23 && $mm <= 59 && $ss <= 59);
 
  return defined $zone ? timegm($ss,$mm,$hh,$day,$month,$year) - $zone
     	    	      : timelocal($ss,$mm,$hh,$day,$month,$year);

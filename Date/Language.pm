@@ -7,7 +7,7 @@ use     Carp;
 use     vars qw($VERSION @ISA);
 require Date::Format;
 
-$VERSION = do { my @r=(q$Revision: 1.5 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
+$VERSION = "1.06"; #$Id: //depot/TimeDate/Date/Language.pm#4$
 @ISA     = qw(Date::Format::Generic);
 
 sub new
@@ -141,6 +141,7 @@ sub format_b { $MoYs[$_[0]->[4]] }
 sub format_B { $MoY[$_[0]->[4]] }
 sub format_h { $MoYs[$_[0]->[4]] }
 sub format_p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
+sub format_o { sprintf("%2d.",$_[0]->[3]) }
 
 ##
 ## Norwegian tables

@@ -33,7 +33,7 @@ C<tz_name()> determines the name of the timezone based on its offset
 
 =head1 AUTHORS
 
-Graham Barr <bodg@tiuk.ti.com>
+Graham Barr <bodg@pobox.com>
 David Muir Sharnoff <muir@idiom.com>
 Paul Foley <paul@ascent.com>
 
@@ -48,7 +48,7 @@ use vars qw(@ISA @EXPORT $VERSION @tz_local);
 
 @ISA = qw(Exporter);
 @EXPORT = qw(tz2zone tz_local_offset tz_offset tz_name);
-$VERSION = "2.04";
+$VERSION = "2.07"; #$Id: //depot/TimeDate/Time/Zone.pm#3$
 
 # Parts stolen from code by Paul Foley <paul@ascent.com>
 
@@ -147,7 +147,7 @@ sub calc_off
 CONFIG: {
 	use vars qw(%dstZone %zoneOff %dstZoneOff %Zone);
 
-	%dstZone = (
+	my @dstZone = (
 	#   "ndt"  =>   -2*3600-1800,	 # Newfoundland Daylight   
 	    "adt"  =>   -3*3600,  	 # Atlantic Daylight   
 	    "edt"  =>   -4*3600,  	 # Eastern Daylight
@@ -166,7 +166,7 @@ CONFIG: {
 	    "nzdt" =>  +13*3600,  	 # New Zealand Daylight   
 	);
 
-	%Zone = (
+	my @Zone = (
 	    "gmt"	=>   0,  	 # Greenwich Mean
 	    "ut"        =>   0,  	 # Universal (Coordinated)
 	    "utc"       =>   0,
@@ -204,8 +204,8 @@ CONFIG: {
 	# For completeness.  NST is also Newfoundland Stanard, and SST is also Swedish Summer.
 	#   "nst"	=>  +6*3600+1800,# North Sumatra
 	#   "sst"	=>  +7*3600, 	 # South Sumatra, USSR Zone 6
-	    "wast"	=>  +7*3600, 	 # West Australian Standard
 	#   "jt"	=>  +7*3600+1800,# Java (3pm in Cronusland!)
+	    "wst"	=>  +8*3600, 	 # West Australian Standard
 	    "cct"	=>  +8*3600, 	 # China Coast, USSR Zone 7
 	    "jst"	=>  +9*3600,	 # Japan Standard, USSR Zone 8
 	#   "cast"	=>  +9*3600+1800,# Central Australian Standard
@@ -216,13 +216,10 @@ CONFIG: {
 	    "idle"	=> +12*3600,	 # International Date Line East
 	);
 
-	%zoneOff = reverse(%Zone);
-	%dstZoneOff = reverse(%dstZone);
-
-	# Preferences
-
-	$zoneOff{0}       = 'gmt';
-	$dstZoneOff{3600} = 'bst';
+	%Zone = @Zone;
+	%dstZone = @dstZone;
+	%zoneOff = reverse(@Zone);
+	%dstZoneOff = reverse(@dstZone);
 
 }
 
@@ -256,8 +253,12 @@ sub tz_name (;$$)
 	$off = tz_offset()
 		unless(defined $off);
 
-	$dst = (localtime(time))[8]
+	my $dstNow = (localtime(time))[8];
+
+	$dst = $dstNow
 		unless(defined $dst);
+
+	$off += ($dst ? 3600 : 0) - ($dstNow ? 3600 : 0);
 
 	if (exists $dstZoneOff{$off} && ($dst || !exists $zoneOff{$off})) {
 		return $dstZoneOff{$off};

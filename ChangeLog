@@ -1,3 +1,30 @@
+*** Release 1.08
+
+Fri Jan  2 1998 <gbarr@pobox.com> (Graham Barr)
+
+	Date::Format, Time::Zone
+	- Fix for formatting %z and %Z
+	
+	all
+	- Update Email address and year
+
+Fri Jan  2 1998 <gbarr@pobox.com> (Graham Barr)
+
+	Date::Language
+	- Added o format to German.
+
+Fri Sep 12 1997 <gbarr@pobox.com> (Graham Barr)
+
+        Date::Parse
+        - Added 'DST' to parser, it adjusts $zone by 3600 (but that may not
+          be right in all cases)
+	- Added a check to str2time to ensure valid
+	  values are passed to Time::Local, to avoid croak-ing
+	- Fixed to treat AM and PM correctly when the hour is 12. (I hope :-)
+
+	Time::Zone
+	- Modified for Western Australia
+
 Tue 07 Jan 1996
 
 	o Release 1.07

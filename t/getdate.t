@@ -4,7 +4,7 @@
 #and adding the folloing acknowledgement into Date/t/getdate.t
 #Thanks to Graham Barr for writing these tests. Slightly adjusted for
 #the C version by Andreas Koenig, 96-06-08.
-
+   
 use  Date::Parse;
 
 $data = qq!1995-01-24                ;790905600
@@ -13,6 +13,9 @@ $data = qq!1995-01-24                ;790905600
 1995-01-24  BST                      ;790902000
 1995-06-24  GMT                      ;803952000
 1995-06-24  BST                      ;803948400
+92/01/02 12:01 GMT		     ;694353660
+92/01/02 12:01 AM GMT		     ;694310460
+92/01/02 12:01 PM GMT		     ;694353660
 Wed, 16 Jun 94 07:29:35 CST    	     ;771773375
 Wed, 16 Nov 94 07:29:35 CST 	     ;784992575
 Mon, 21 Nov 94 07:42:23 CST 	     ;785425343
