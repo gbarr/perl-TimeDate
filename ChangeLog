@@ -1,3 +1,40 @@
+Change 753 on 2002/11/03 by <gbarr@pobox.com> (Graham Barr)
+
+	Fix bug parsing 2002-11-02 11pm
+
+Change 752 on 2002/11/03 by <gbarr@pobox.com> (Graham Barr)
+
+	Add Greek language module from Matthew Musgrove
+
+Change 744 on 2002/09/16 by <gbarr@pobox.com> (Graham Barr)
+
+	Add Date::Language::Brazilian and Date::Language::Danish
+	to MANIFEST
+
+Change 743 on 2002/09/16 by <gbarr@pobox.com> (Graham Barr)
+
+	Add Date::Language::Brazilian from Christian Tosta
+	Add Date::Language::Danish from Lars Skjærlund
+
+Change 742 on 2002/09/16 by <gbarr@pobox.com> (Graham Barr)
+
+	Time::Zone
+	- Add some zones for Brazil
+
+Change 741 on 2002/09/16 by <gbarr@pobox.com> (Graham Barr)
+
+	Time::Zone [cpan #1299]
+	- Allow $ENV{TZ} to have zomes like EST5
+
+Change 733 on 2002/06/13 by <gbarr@pobox.com> (Graham Barr)
+
+	Date::Language::French
+	- Fix missing ;
+
+Change 732 on 2002/06/06 by <gbarr@pobox.com> (Graham Barr)
+
+	Release 1.13
+
 Change 731 on 2002/06/06 by <gbarr@pobox.com> (Graham Barr)
 
 	Fix pattern to allow single digits for month and day (eg '2002-6-1')
