@@ -1,6 +1,4 @@
-# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#9 $
-#
-# Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
+# Copyright (c) 1995-2004 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
 # as Perl itself.
 
@@ -391,13 +389,19 @@ C<%d>, C<%e>, C<%H>, C<%I>, C<%j>, C<%k>, C<%l>, C<%m>, C<%M>, C<%q>,
 C<%y> and C<%Y> can be output in Roman numerals by prefixing the letter
 with C<O>, e.g. C<%OY> will output the year as roman numerals.
 
+=head1 LIMITATION
+
+The functions in this module are limited to the time range that can be
+represented by the time_t data type, i.e. 1901-12-13 20:45:53 GMT to
+2038-01-19 03:14:07 GMT.
+
 =head1 AUTHOR
 
 Graham Barr <gbarr@pobox.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
+Copyright (c) 1995-2004 Graham Barr. All rights reserved. This program is free
 software; you can redistribute it and/or modify it under the same terms
 as Perl itself.
 

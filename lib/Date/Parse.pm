@@ -1,6 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#22 $
-#
-# Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
+# Copyright (c) 1995-2004 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
 # as Perl itself.
 
@@ -17,7 +15,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = "2.28";
+$VERSION = "2.29";
 
 my %month = (
 	january		=> 0,
@@ -262,7 +260,7 @@ sub str2time
  if (defined $zone) {
    $result = eval {
      local $SIG{__DIE__} = sub {}; # Ick!
-     timegm($ss,$mm,$hh,$day,$month,$year);
+     timegm($ss,$mm,$hh,$day,$month,$year+1900);
    };
    return undef
      if !defined $result
@@ -274,7 +272,7 @@ sub str2time
  else {
    $result = eval {
      local $SIG{__DIE__} = sub {}; # Ick!
-     timelocal($ss,$mm,$hh,$day,$month,$year);
+     timelocal($ss,$mm,$hh,$day,$month,$year+1900);
    };
    return undef
      if !defined $result
@@ -325,7 +323,7 @@ failure.
 
 =head1 MULTI-LANGUAGE SUPPORT
 
-Date::Parse is capable of parsing dates in several languages, these are
+Date::Parse is capable of parsing dates in several languages, these include
 English, French, German and Italian.
 
 	$lang = Date::Language->new('German');
@@ -349,8 +347,9 @@ Below is a sample list of dates that are known to be parsable with Date::Parse
 
 =head1 LIMITATION
 
-Date::Parse uses Time::Local internally, so is limited to only parsing dates
-which result in valid values for Time::Local::timelocal
+Date::Parse uses L<Time::Local> internally, so is limited to only parsing dates
+which result in valid values for Time::Local::timelocal. This generally means dates
+between 1901-12-17 00:00:00 GMT and 2038-01-16 23:59:59 GMT
 
 =head1 BUGS
 
@@ -372,11 +371,9 @@ Graham Barr <gbarr@pobox.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
+Copyright (c) 1995-2004 Graham Barr. All rights reserved. This program is free
 software; you can redistribute it and/or modify it under the same terms
 as Perl itself.
 
 =cut
-
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#22 $
 
