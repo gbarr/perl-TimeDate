@@ -1,3 +1,12 @@
+Change 814 on 2003/06/03 by <gbarr@pobox.com> (Graham Barr)
+
+	Date::Parse
+	- Time::Local in 5.8 does not support fractional seconds
+
+Change 813 on 2003/06/02 by <gbarr@pobox.com> (Graham Barr)
+
+	Release 1.15
+
 Change 812 on 2003/06/02 by <gbarr@pobox.com> (Graham Barr)
 
 	Fix comments about Language implementation in Date::Parse
