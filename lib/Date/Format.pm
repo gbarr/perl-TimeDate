@@ -1,4 +1,4 @@
-# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#4 $
+# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#5 $
 #
 # Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -10,7 +10,7 @@ use     strict;
 use     vars qw(@EXPORT @ISA $VERSION);
 require Exporter;
 
-$VERSION = "2.20";
+$VERSION = "2.21";
 @ISA     = qw(Exporter);
 @EXPORT  = qw(time2str strftime ctime asctime);
 
@@ -202,6 +202,7 @@ sub format_b { $MoYs[$_[0]->[4]] }
 sub format_B { $MoY[$_[0]->[4]] }
 sub format_h { $MoYs[$_[0]->[4]] }
 sub format_p { $_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0] }
+sub format_P { lc($_[0]->[2] >= 12 ?  $AMPM[1] : $AMPM[0]) }
 
 sub format_d { sprintf("%02d",$_[0]->[3]) }
 sub format_e { sprintf("%2d",$_[0]->[3]) }
@@ -362,6 +363,7 @@ category of the program's locale.
 	%n 	NEWLINE
 	%o	ornate day of month -- "1st", "2nd", "25th", etc.
 	%p 	AM or PM 
+	%P 	am or pm (Yes %p and %P are backwards :)
 	%q	Quarter number, starting with 1
 	%r 	time format: 09:05:57 PM
 	%R 	time format: 21:05
