@@ -160,6 +160,7 @@ CONFIG: {
 	    "mest" =>   +2*3600,  	 # Middle European Summer   
 	    "sst"  =>   +2*3600,  	 # Swedish Summer
 	    "fst"  =>   +2*3600,  	 # French Summer
+            "eest" =>   +3*3600,         # Eastern European Summer
 	    "wadt" =>   +8*3600,  	 # West Australian Daylight
 	#   "cadt" =>  +10*3600+1800,	 # Central Australian Daylight
 	    "eadt" =>  +11*3600,  	 # Eastern Australian Daylight
