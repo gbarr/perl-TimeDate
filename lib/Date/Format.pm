@@ -1,4 +1,4 @@
-# Date::Format
+# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#2 $
 #
 # Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -6,136 +6,11 @@
 
 package Date::Format;
 
-=head1 NAME
-
-Date::Format - Date formating subroutines
-
-=head1 SYNOPSIS
-
-	use Date::Format;
-	
-	@lt = timelocal(time);
-	
-	print time2str($template, time);
-	print strftime($template, @lt);
-	
-	print time2str($template, time, $zone);
-	print strftime($template, @lt, $zone);
-	
-	print ctime(time);
-	print ascctime(@lt);
-	
-	print ctime(time, $zone);
-	print asctime(@lt, $zone);
-
-=head1 DESCRIPTION
-
-This module provides routines to format dates into ASCII strings. They
-correspond to the C library routines C<strftime> and C<ctime>.
-
-=over 4
-
-=item time2str(TEMPLATE, TIME [, ZONE])
-
-C<time2str> converts C<TIME> into an ASCII string using the conversion
-specification given in C<TEMPLATE>. C<ZONE> if given specifies the zone
-which the output is required to be in, C<ZONE> defaults to your current zone.
-
-
-=item strftime(TEMPLATE, TIME [, ZONE])
-
-C<strftime> is similar to C<time2str> with the exception that the time is
-passed as an array, such as the array returned by C<localtime>.
-
-=item ctime(TIME [, ZONE])
-
-C<ctime> calls C<time2str> with the given arguments using the
-conversion specification C<"%a %b %e %T %Y\n">
-
-=item asctime(TIME [, ZONE])
-
-C<asctime> calls C<time2str> with the given arguments using the
-conversion specification C<"%a %b %e %T %Y\n">
-
-=back
-
-=head1 MULTI-LANGUAGE SUPPORT
-
-Date::Format is capable of formating into several languages, these are
-English, French, German and Italian. Changing the language is done via
-a static method call, for example
-
-	Date::Format->language('German');
-
-will change the language in which all subsequent dates are formatted.
-
-This is only a first pass, I am considering changing this to be
-
-	$lang = Date::Language->new('German');
-	$lang->time2str("%a %b %e %T %Y\n", time);
-
-I am open to suggestions on this.
-
-=head1 CONVERSION SPECIFICATION
-
-Each conversion specification  is  replaced  by  appropriate
-characters   as   described  in  the  following  list.   The
-appropriate  characters  are  determined  by   the   LC_TIME
-category of the program's locale.
-
-	%%	PERCENT
-	%a	day of the week abbr
-	%A	day of the week
-	%b	month abbr
-	%B 	month
-	%c 	ctime format: Sat Nov 19 21:05:57 1994
-	%d 	numeric day of the month, with leading zeros (eg 01..31)
-	%e 	numeric day of the month, without leading zeros (eg 1..31)
-	%D 	MM/DD/YY
-	%h 	month abbr
-	%H 	hour, 24 hour clock, leading 0's)
-	%I 	hour, 12 hour clock, leading 0's)
-	%j 	day of the year
-	%k 	hour
-	%l 	hour, 12 hour clock
-	%m 	month number, starting with 1
-	%M 	minute, leading 0's
-	%n 	NEWLINE
-	%o	ornate day of month -- "1st", "2nd", "25th", etc.
-	%p 	AM or PM 
-	%r 	time format: 09:05:57 PM
-	%R 	time format: 21:05
-	%s	seconds since the Epoch, UCT
-	%S 	seconds, leading 0's
-	%t 	TAB
-	%T 	time format: 21:05:57
-	%U 	week number, Sunday as first day of week
-	%w 	day of the week, numerically, Sunday == 0
-	%W 	week number, Monday as first day of week
-	%x 	date format: 11/19/94
-	%X 	time format: 21:05:57
-	%y	year (2 digits)
-	%Y	year (4 digits)
-	%Z 	timezone in ascii. eg: PST
-	%z	timezone in format -/+0000
-
-=head1 AUTHOR
-
-Graham Barr <gbarr@pobox.com>
-
-=head1 COPYRIGHT
-
-Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
-software; you can redistribute it and/or modify it under the same terms
-as Perl itself.
-
-=cut
-
 use     strict;
 use     vars qw(@EXPORT @ISA $VERSION);
 require Exporter;
 
-$VERSION = do { my @r=(q$Revision: 2.8 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
+$VERSION = "2.08";
 @ISA     = qw(Exporter);
 @EXPORT  = qw(time2str strftime ctime asctime);
 
@@ -362,3 +237,132 @@ foreach (qw(f g i q u v E F G J K L N O P Q V %))
 }
 
 1;
+__END__
+
+=head1 NAME
+
+Date::Format - Date formating subroutines
+
+=head1 SYNOPSIS
+
+	use Date::Format;
+	
+	@lt = timelocal(time);
+	
+	print time2str($template, time);
+	print strftime($template, @lt);
+	
+	print time2str($template, time, $zone);
+	print strftime($template, @lt, $zone);
+	
+	print ctime(time);
+	print ascctime(@lt);
+	
+	print ctime(time, $zone);
+	print asctime(@lt, $zone);
+
+=head1 DESCRIPTION
+
+This module provides routines to format dates into ASCII strings. They
+correspond to the C library routines C<strftime> and C<ctime>.
+
+=over 4
+
+=item time2str(TEMPLATE, TIME [, ZONE])
+
+C<time2str> converts C<TIME> into an ASCII string using the conversion
+specification given in C<TEMPLATE>. C<ZONE> if given specifies the zone
+which the output is required to be in, C<ZONE> defaults to your current zone.
+
+
+=item strftime(TEMPLATE, TIME [, ZONE])
+
+C<strftime> is similar to C<time2str> with the exception that the time is
+passed as an array, such as the array returned by C<localtime>.
+
+=item ctime(TIME [, ZONE])
+
+C<ctime> calls C<time2str> with the given arguments using the
+conversion specification C<"%a %b %e %T %Y\n">
+
+=item asctime(TIME [, ZONE])
+
+C<asctime> calls C<time2str> with the given arguments using the
+conversion specification C<"%a %b %e %T %Y\n">
+
+=back
+
+=head1 MULTI-LANGUAGE SUPPORT
+
+Date::Format is capable of formating into several languages, these are
+English, French, German and Italian. Changing the language is done via
+a static method call, for example
+
+	Date::Format->language('German');
+
+will change the language in which all subsequent dates are formatted.
+
+This is only a first pass, I am considering changing this to be
+
+	$lang = Date::Language->new('German');
+	$lang->time2str("%a %b %e %T %Y\n", time);
+
+I am open to suggestions on this.
+
+=head1 CONVERSION SPECIFICATION
+
+Each conversion specification  is  replaced  by  appropriate
+characters   as   described  in  the  following  list.   The
+appropriate  characters  are  determined  by   the   LC_TIME
+category of the program's locale.
+
+	%%	PERCENT
+	%a	day of the week abbr
+	%A	day of the week
+	%b	month abbr
+	%B 	month
+	%c	MM/DD/YY HH:MM:SS
+	%C 	ctime format: Sat Nov 19 21:05:57 1994
+	%d 	numeric day of the month, with leading zeros (eg 01..31)
+	%e 	numeric day of the month, without leading zeros (eg 1..31)
+	%D 	MM/DD/YY
+	%h 	month abbr
+	%H 	hour, 24 hour clock, leading 0's)
+	%I 	hour, 12 hour clock, leading 0's)
+	%j 	day of the year
+	%k 	hour
+	%l 	hour, 12 hour clock
+	%m 	month number, starting with 1
+	%M 	minute, leading 0's
+	%n 	NEWLINE
+	%o	ornate day of month -- "1st", "2nd", "25th", etc.
+	%p 	AM or PM 
+	%r 	time format: 09:05:57 PM
+	%R 	time format: 21:05
+	%s	seconds since the Epoch, UCT
+	%S 	seconds, leading 0's
+	%t 	TAB
+	%T 	time format: 21:05:57
+	%U 	week number, Sunday as first day of week
+	%w 	day of the week, numerically, Sunday == 0
+	%W 	week number, Monday as first day of week
+	%x 	date format: 11/19/94
+	%X 	time format: 21:05:57
+	%y	year (2 digits)
+	%Y	year (4 digits)
+	%Z 	timezone in ascii. eg: PST
+	%z	timezone in format -/+0000
+
+=head1 AUTHOR
+
+Graham Barr <gbarr@pobox.com>
+
+=head1 COPYRIGHT
+
+Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
+software; you can redistribute it and/or modify it under the same terms
+as Perl itself.
+
+=cut
+
+
