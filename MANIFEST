@@ -2,7 +2,6 @@ ChangeLog
 MANIFEST
 Makefile.PL
 README
-TimeDate.ppd
 lib/Date/Format.pm
 lib/Date/Language.pm
 lib/Date/Language/Austrian.pm
