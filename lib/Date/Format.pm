@@ -1,4 +1,4 @@
-# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#3 $
+# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#4 $
 #
 # Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -378,6 +378,10 @@ category of the program's locale.
 	%Y	year (4 digits)
 	%Z 	timezone in ascii. eg: PST
 	%z	timezone in format -/+0000
+
+C<%d>, C<%e>, C<%H>, C<%I>, C<%j>, C<%k>, C<%l>, C<%m>, C<%M>, C<%q>,
+C<%y> and C<%Y> can be output in Roman numerals by prefixing the letter
+with C<O>, e.g. C<%OY> will output the year as roman numerals.
 
 =head1 AUTHOR
 

@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#3 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#4 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -298,6 +298,36 @@ This is only a first pass, I am considering changing this to be
 
 I am open to suggestions on this.
 
+=head1 EXAMPLE DATES
+
+Below is a sample list of dates that are known to be parsable with Date::Parse
+
+ 1995:01:24:09:08:17.1823213           ISO-8601
+ 1995-01-24:09:08:17.1823213
+ Wed, 16 Jun 94 07:29:35 CST           Comma and day name are optional 
+ Thu, 13 Oct 94 10:13:13 -0700
+ Wed, 9 Nov 1994 09:50:32 -0500 (EST)  Text in ()'s will be ignored.
+ 21 dec 17:05                          Will be parsed in the current time zone
+ 21-dec 17:05
+ 21/dec 17:05
+ 21/dec/93 17:05
+ 1999 10:02:18 "GMT"
+ 16 Nov 94 22:28:20 PST 
+
+=head1 BUGS
+
+When both the month and the date are specified in the date as numbers
+they are always parsed assuming that the month number comes before the
+date. This is the usual format used in American dates.
+
+The reason why it is like this and not dynamic is that it must be
+deterministic. Several people have suggested using the current locale,
+but this will not work as the date being parsed may not be in the format
+of the current locale.
+
+My plans to address this, which will be in a future release, is to allow
+the programmer to state what order they want these values parsed in.
+
 =head1 AUTHOR
 
 Graham Barr <gbarr@pobox.com>
@@ -310,5 +340,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#3 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#4 $
 
