@@ -44,7 +44,7 @@ Graham Barr <Graham.Barr@tiuk.ti.com>
 
 =head1 REVISION
 
-$Revision: 2.3 $
+$Revision: 2.4 $
 
 =head1 COPYRIGHT
 
@@ -65,7 +65,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw( &strtotime &str2time);
 
-$VERSION = sprintf("%d.%02d", q$Revision: 2.3 $ =~ m#(\d+)\.(\d+)#);
+$VERSION = sprintf("%d.%02d", q$Revision: 2.4 $ =~ m#(\d+)\.(\d+)#);
 
 my($AM, $PM) = (0,12);
 
@@ -112,6 +112,9 @@ my %ampm = (
 # map am +. a.m.
 map { my($z) = $_; $z =~ s#(\w)#$1\.#g; $ampm{$z} = $ampm{$_} } keys %ampm;
 
+my $daypat = join("|",keys %day);
+my $monpat = join("|",keys %month);
+
 sub strptime
 {
  my $dtstr = lc shift;
@@ -119,131 +122,82 @@ sub strptime
  my $merid = 24;
 
  my($year,$month,$day,$hh,$mm,$ss,$zone) = (undef) x 7;
- my($havedate,$havezone,$havetime,$haveyear) = (0,0,0,0);
 
  $zone = tz_offset(shift)
     if(@_);
 
- while(1) { last unless($dtstr =~ s#\([^\(\)]*\)##o) }
+ while(1) { last unless($dtstr =~ s#\([^\(\)]*\)# #o) }
 
- $dtstr =~ s#\s+$##;
+ $dtstr =~ s#(\A|\Z)# #og;
 
- my $loop;
+ # ignore day names
+ $dtstr =~ s#($daypat)\s*,?# #o;
 
- for($loop = 0 ; $loop < 3 ; $loop++)
+ # Time: 12:00 or 12:00:00 with optional am/pm
+  
+ if($dtstr =~ s#[:\s](\d\d?):(\d\d)(:(\d\d)(?:\.\d+)?)?\s*([ap]\.?m\.?)?\s# #o)
   {
-   # ignore day names
+   ($hh,$mm,$ss) = ($1,$2,$4 || 0);
+   $merid = $ampm{$5} if($5);
+  }
 
-   if($dtstr =~ m#(\w+)\s*,?#o && exists $day{$1})
+ # Time: 12 am
+  
+ elsif($dtstr =~ s#\s(\d\d?)\s*([ap]\.?m\.?)\s# #o)
+  {
+   ($hh,$mm,$ss) = ($1,0,0);
+   $merid = $ampm{$2};
+  }
+  
+ # Date: 12-June-96 (using - . or /)
+  
+ if($dtstr =~ s#\s(\d\d?)([\-\./])($monpat)(\2(\d\d+))?\s# #o)
+  {
+   ($month,$day) = ($month{$3},$1);
+   $year = $5
+        if($5);
+  }
+  
+ # Date: 12-12-96 (using '-', '.' or '/' )
+  
+ elsif($dtstr =~ s#\s(\d\d*)([\-\./])(\d\d?)(\2(\d\d+))?\s# #o)
+  {
+   ($month,$day) = ($1 - 1,$3);
+   if($5)
     {
-     $dtstr =~ s#(\w+)\s*,?##o;
-    }
-
-   if($dtstr =~ s#([\-\+]\d{3,4})##o)
-    {
-     $zone = 60 * ($1 % 100 + 60 * int($1/100));
-     $havezone++;
-    }
-  
-   # Date: 12-June-96 (using - . or /)
-  
-   if($dtstr =~ m#(\d\d?)([\-\./])(\w+)(\2(\d\d+))?#o && exists $month{$3})
-    {
-     $dtstr =~ s#(\d\d?)([\-\./])(\w+)(\2(\d\d))?##o;
-  
-     ($month,$day) = ($month{$3},$1);
-     if($5)
-      {
-       $year = $5;
-       $haveyear++;
-      }
-     $havedate++;
-    }
-  
-   # Date: 12-12-96 (using - . or /)
-  
-   if($dtstr =~ s#^\s*(\d\d*)([\-\./])(\d\d?)(\2(\d\d+))?\s*##o)
-    {
-     ($month,$day) = ($1 - 1,$3);
-     if($5)
-      {
-       $year = $5;
-       # Possible match for 1995-01-24 (short mainframe date format);
-       ($year,$month,$day) = ($1, $3 - 1, $5)
+     $year = $5;
+     # Possible match for 1995-01-24 (short mainframe date format);
+     ($year,$month,$day) = ($1, $3 - 1, $5)
     	    if($month > 12);
-       $haveyear++;
-      }
-     $havedate++;
     }
+  }
+ elsif($dtstr =~ s#\s(\d+)\s*(st|nd|rd|th)?\s*($monpat)# #o)
+  {
+   ($month,$day) = ($month{$3},$1);
+  }
+ elsif($dtstr =~ s#($monpat)\s*(\d+)\s*(st|nd|rd|th)?\s# #o)
+  {
+   ($month,$day) = ($month{$1},$2);
+  }
+ $year = $1
+    if(!defined($year) && $dtstr =~ s#\s(\d{2}(\d{2})?)\s# #o);
 
-   # Time: 12:00 or 12:00:00 with optional am/pm
-  
-   if($dtstr =~ s#:?\b(\d\d?):(\d\d)(:(\d\d)(?:\.\d+)?)?\s*([ap]\.?m\.?)?\b##o)
-    {
-     ($hh,$mm,$ss) = ($1,$2,$4 || 0);
-     $merid = $ampm{$5} if($5);
-     $havetime++;
-    }
-  
-   if($dtstr =~ s#(\d{4})##o)
-    {
-     $haveyear++;
-     $year = $1;
-    }
+ # Zone
 
-   # Time: 12 am
-  
-   if($dtstr =~ s#\b(\d\d?)\s*([ap]\.?m\.?)\b##io)
-    {
-     ($hh,$mm,$ss) = ($1,0,0);
-     $merid = $ampm{$2};
-     $havetime++;
-    }
-  
-   # Zone
-  
-   while($dtstr =~ m#\b"?(\w{3,4})\b#og) 
-    {
-     my $n = $1;
-     my $z = tz_offset($n);
-     if(defined $z)
-      {
-       $zone = $z;
-       $dtstr =~ s#"?$n##i;
-       $havezone++;
-       last;
-      }
-    }
-  
-   if($dtstr =~ m#(\d+)\s*(st|nd|rd|th)?\s*(\w+)#o &&
-        exists $month{$3})
-    {
-     $dtstr =~ s#(\d+)\s*(st|nd|rd|th)?\s*(\w+)?##o;
-     ($month,$day) = ($month{$3},$1);
-     $havedate++;
-    }
-
-   if($dtstr =~ m#(\w+)\s*(\d+)\s*(st|nd|rd|th)?\b#o &&
-        exists $month{$1})
-    {
-     $dtstr =~ s#(\w+)\s*(\d+)\s*(st|nd|rd|th)?\b?##o;
-     ($month,$day) = ($month{$1},$2);
-     $havedate++;
-    }
-
-   if($dtstr =~ s#^\s*(\d{2,})\s*$##o)
-    {
-     $haveyear++;
-     $year = $1;
-    }
-
-   $dtstr =~ s#^\s+##o;
-
-   last unless length $dtstr;
+ if($dtstr =~ s#\s"?(\w{3,})\s# #o) 
+  {
+   $zone = tz_offset($1);
+   return ()
+    unless(defined $zone);
+  }
+ elsif($dtstr =~ s#\s(([\-\+])\d\d?)(\d\d)\s# #o)
+  {
+   my $m = $2 . $3;
+   $zone = 60 * ($m + (60 * $1));
   }
 
  return ()
-	if($havedate > 1 || $havetime > 1 || $havezone > 1 || length $dtstr);
+    if($dtstr =~ /\S/o);
 
  $hh += 12
 	if(defined $hh && $merid == $PM);

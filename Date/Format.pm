@@ -105,7 +105,7 @@ Graham Barr <Graham.Barr@tiuk.ti.com>
 
 =head1 REVISION
 
-$Revision: 2.2 $
+$Revision: 2.3 $
 
 =head1 COPYRIGHT
 
@@ -125,7 +125,7 @@ use vars qw(@DoW @MoY @DoWs @MoYs @AMPM @Dsuf %locale);
 use vars qw($sec $min $hour $mday $mon $year $wday $yday $isdst $tzname $epoch);
 use vars qw(@EXPORT @ISA $VERSION);
 
-$VERSION = sprintf("%d.%02d", q$Revision: 2.2 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 2.3 $ =~ /(\d+)\.(\d+)/);
 
 require Exporter;
 @ISA = qw(Exporter);
@@ -245,7 +245,6 @@ sub time2str ($;$$)
 	unless($tzname =~ /\D/);
 
    $time += tz_offset($tzname);
-
    ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = gmtime($time);
   }
  else
