@@ -1,3 +1,28 @@
+Change 579 on 2000/09/04 by <gbarr@pobox.com> (Graham Barr)
+
+	Date::Parse
+	- Support for more date formats
+	
+	Time::Zone
+	- Added more zones
+
+Change 539 on 2000/06/14 by <gbarr@pobox.com> (Graham Barr)
+
+	Documentation updates
+
+Change 536 on 2000/06/06 by <gbarr@pobox.com> (Graham Barr)
+
+	Fix VERSION numbers
+
+Change 535 on 2000/06/06 by <gbarr@pobox.com> (Graham Barr)
+
+	Date::Format
+	- Added support for %O* to support output of roman numerals
+
+Change 443 on 2000/03/29 by <gbarr@pobox.com> (Graham Barr)
+
+	Release 1.09
+
 Change 442 on 2000/03/29 by <gbarr@pobox.com> (Graham Barr)
 
 	Added PPD stuff to Makefile.PL
