@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#9 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#10 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -326,8 +326,8 @@ I am open to suggestions on this.
 
 Below is a sample list of dates that are known to be parsable with Date::Parse
 
- 1995:01:24:09:08:17.1823213           ISO-8601
- 1995-01-24:09:08:17.1823213
+ 1995:01:24T09:08:17.1823213           ISO-8601
+ 1995-01-24T09:08:17.1823213
  Wed, 16 Jun 94 07:29:35 CST           Comma and day name are optional 
  Thu, 13 Oct 94 10:13:13 -0700
  Wed, 9 Nov 1994 09:50:32 -0500 (EST)  Text in ()'s will be ignored.
@@ -364,5 +364,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#9 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#10 $
 
