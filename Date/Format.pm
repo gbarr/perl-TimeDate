@@ -89,8 +89,8 @@ category of the program's locale.
 	%b	month abbr
 	%B 	month
 	%c 	ctime format: Sat Nov 19 21:05:57 1994
-	%d 	numeric day of the month
-	%e 	DD
+	%d 	numeric day of the month, with leading zeros (eg 01..31)
+	%e 	numeric day of the month, without leading zeros (eg 1..31)
 	%D 	MM/DD/YY
 	%h 	month abbr
 	%H 	hour, 24 hour clock, leading 0's)
