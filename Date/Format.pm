@@ -125,7 +125,7 @@ Graham Barr <Graham.Barr@tiuk.ti.com>
 
 =head1 REVISION
 
-$Revision: 2.6 $
+$Revision: 2.7 $
 
 =head1 COPYRIGHT
 
@@ -139,7 +139,7 @@ use     strict;
 use     vars qw(@EXPORT @ISA $VERSION);
 require Exporter;
 
-$VERSION = sprintf("%d.%02d", q$Revision: 2.6 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 2.7 $ =~ /(\d+)\.(\d+)/);
 @ISA     = qw(Exporter);
 @EXPORT  = qw(time2str strftime ctime asctime);
 
@@ -267,6 +267,7 @@ my(@DoW,@MoY,@DoWs,@MoYs,@AMPM,%format,@Dsuf);
 
 @Dsuf = (qw(th st nd rd th th th th th th)) x 3;
 @Dsuf[11,12,13] = qw(th th th);
+@Dsuf[30,31] = qw(th st);
 
 %format = ('x' => "%m/%d/%y",
            'C' => "%a %b %e %T %Z %Y",

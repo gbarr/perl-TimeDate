@@ -7,7 +7,7 @@ use     Carp;
 use     vars qw($VERSION @ISA);
 require Date::Format;
 
-$VERSION = do { my @r=(q$Revision: 1.4 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
+$VERSION = do { my @r=(q$Revision: 1.5 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
 @ISA     = qw(Date::Format::Generic);
 
 sub new
@@ -94,6 +94,7 @@ use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW);
 
 @Dsuf = (qw(th st nd rd th th th th th th)) x 3;
 @Dsuf[11,12,13] = qw(th th th);
+@Dsuf[30,31] = qw(th st);
 
 @MoY{@MoY}  = (0 .. scalar(@MoY));
 @MoY{@MoYs} = (0 .. scalar(@MoYs));

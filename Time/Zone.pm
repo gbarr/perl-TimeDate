@@ -39,7 +39,7 @@ Paul Foley <paul@ascent.com>
 
 =head1 REVISION
 
-$Revision: 2.2 $
+$Revision: 2.3 $
 
 =cut
 
@@ -52,7 +52,7 @@ use vars qw(@ISA @EXPORT $VERSION @tz_local);
 
 @ISA = qw(Exporter);
 @EXPORT = qw(tz2zone tz_local_offset tz_offset tz_name);
-$VERSION = sprintf("%d.%02d", q$Revision: 2.2 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 2.3 $ =~ /(\d+)\.(\d+)/);
 
 # Parts stolen from code by Paul Foley <paul@ascent.com>
 
@@ -102,7 +102,7 @@ sub tz_local_offset (;$)
 
 	$time = time() unless $time;
 	my (@l) = localtime($time);
-	my $isdst = @l[8];
+	my $isdst = $l[8];
 
 	if (defined($tz_local[$isdst])) {
 		return $tz_local[$isdst];

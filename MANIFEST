@@ -2,7 +2,6 @@ ChangeLog
 Date/Format.pm			(v2.06) Date formatter
 Date/Language.pm		(v1.04) 
 Date/Parse.pm			(v2.05) Date parser
-Local.pm.new			Patched version of Time::Local
 MANIFEST
 Makefile.PL
 README

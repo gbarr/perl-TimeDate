@@ -61,7 +61,7 @@ Graham Barr <Graham.Barr@tiuk.ti.com>
 
 =head1 REVISION
 
-$Revision: 2.5 $
+$Revision: 2.6 $
 
 =head1 COPYRIGHT
 
@@ -82,7 +82,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = sprintf("%d.%02d", q$Revision: 2.5 $ =~ m#(\d+)\.(\d+)#);
+$VERSION = sprintf("%d.%02d", q$Revision: 2.6 $ =~ m#(\d+)\.(\d+)#);
 
 my %month = (
 	january		=> 0,
@@ -202,6 +202,14 @@ sub
   {
    ($month,$day) = ($month{$1},$2);
   }
+
+ # Date: 961212
+
+ elsif($dtstr =~ s#\s(\d\d)(\d\d)(\d\d)\s# #o)
+  {
+   ($year,$month,$day) = ($1,$2-1,$3);
+  }
+
  $year = $1
     if(!defined($year) && $dtstr =~ s#\s(\d{2}(\d{2})?)[\s\.,]# #o);
 

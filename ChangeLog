@@ -1,3 +1,10 @@
+Thu 02 Jan 1996
+
+	o Release 1.06
+	o Fixed t/getdate.t
+	o Date::Parse can now parse the date-format 960913, which apparently
+	  is fairly common in sweden.
+
 Wed 31 Jul 1996 <bodg@tiuk.ti.com>
 
 	o Release 1.05
