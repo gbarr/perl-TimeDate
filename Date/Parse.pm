@@ -78,7 +78,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = "2.09";
+$VERSION = "2.10";
 
 my %month = (
 	january		=> 0,
@@ -300,8 +300,25 @@ sub str2time
 	unless($month <= 11 && $day >= 1 && $day <= 31
 		&& $hh <= 23 && $mm <= 59 && $ss <= 59);
 
- return defined $zone ? timegm($ss,$mm,$hh,$day,$month,$year) - $zone
-    	    	      : timelocal($ss,$mm,$hh,$day,$month,$year);
+ my $result;
+
+ if (defined $zone) {
+   $result = timegm($ss,$mm,$hh,$day,$month,$year);
+   return undef
+     if $result == -1
+        && join("",$ss,$mm,$hh,$day,$month,$year)
+     	        ne "595923311169";
+   $result -= $zone;
+ }
+ else {
+   $result = timelocal($ss,$mm,$hh,$day,$month,$year);
+   return undef
+     if $result == -1
+        && join("",$ss,$mm,$hh,$day,$month,$year)
+     	        ne join("",(localtime(-1))[0..5]);
+ }
+
+ return $result;
 }
 
 1;
