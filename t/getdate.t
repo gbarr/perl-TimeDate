@@ -13,6 +13,7 @@ $data = qq!1995-01-24                ;790905600
 92/01/02 12:01 AM		     ;694310460
 92/01/02 12:01 PM		     ;694353660
 2002-11-02 11pm GMT		     ;1036278000
+2002-11-02 11 pm GMT		     ;1036278000
 1995-01-24  GMT                      ;790905600
 1995-01-24  BST                      ;790902000
 1995-06-24  GMT                      ;803952000
@@ -140,6 +141,7 @@ Jul 13 1999 1:23P.M. GMT	     ;931872180
 07/Nov/2000:16:45:56 +0100	     ;973611956
 2002-11-07T23:31:49-05:00	     ;1036729909
 2003-02-17T07:45:56Z		     ;1045467956
+2003-02-17T08:14:07.198189+0000	     ;1045469647.198189
 !;
 
 require Time::Local;
@@ -188,8 +190,8 @@ foreach (@data){
         require Date::Format;
 	print "-"x50,"\nFAIL $loop\n";
         printf "%s\nDiff:    %d\n", $str, $time - $time_expect;
-        printf "Expect: %10d %s",$time_expect,Date::Format::ctime($time_expect);
-        printf "Got:    %10d %s",$time, Date::Format::ctime($time);
+        printf "Expect: %10f %s",$time_expect,Date::Format::ctime($time_expect);
+        printf "Got:    %10f %s",$time, Date::Format::ctime($time);
     }
     $loop++;
 }

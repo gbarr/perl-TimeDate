@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#18 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#19 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -75,7 +75,7 @@ sub {
   my $dtstr = lc shift;
   my $merid = 24;
 
-  my($year,$month,$day,$hh,$mm,$ss,$zone,$dst);
+  my($year,$month,$day,$hh,$mm,$ss,$zone,$dst,$frac);
 
   $zone = tz_offset(shift) if @_;
 
@@ -89,8 +89,8 @@ sub {
   $dtstr =~ s#($daypat)\s*(den\s)?# #o;
   # Time: 12:00 or 12:00:00 with optional am/pm
   
-  if ($dtstr =~ s/(?:^|\s)(\d{4})([-:]?)(\d\d?)\2(\d\d?)(?:[Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\6(\d\d?)(?:[.,]\d+)?)?)?)?(z?)\b/ $9/) {
-    ($year,$month,$day,$hh,$mm,$ss) = ($1,$3-1,$4,$5,$7,$8);
+  if ($dtstr =~ s/\s(\d{4})([-:]?)(\d\d?)\2(\d\d?)(?:[Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\6(\d\d?)(?:[.,](\d+))?)?)?)?(?=\D)/ /) {
+    ($year,$month,$day,$hh,$mm,$ss,$frac) = ($1,$3-1,$4,$5,$7,$8,$9);
   }
 
   unless (defined $hh) {
@@ -107,6 +107,11 @@ sub {
     }
   }
     
+  if (defined $hh and $hh <= 12 and $dtstr =~ s# ([ap])\.?m?\.?\s# #o) {
+    $merid = $ampm{$1};
+  }
+
+
   unless (defined $year) {
     # Date: 12-June-96 (using - . or /)
     
@@ -189,6 +194,7 @@ sub {
   $year -= 1900 if defined $year && $year > 1900;
 
   $zone += 3600 if defined $zone && $dst;
+  $ss += "0.$frac" if $frac;
 
   return ($ss,$mm,$hh,$day,$month,$year,$zone);
 }
@@ -373,5 +379,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#18 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#19 $
 

@@ -135,7 +135,7 @@ $loop = 1;
 
 foreach (@data)
 {
- $time = str2time($_);
+ $time = int str2time($_);
 
  if(defined $time)
   {
