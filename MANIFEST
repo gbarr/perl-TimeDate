@@ -4,6 +4,8 @@ Makefile.PL
 README
 lib/Date/Format.pm
 lib/Date/Language.pm
+lib/Date/Language/Afar.pm
+lib/Date/Language/Amharic.pm
 lib/Date/Language/Austrian.pm
 lib/Date/Language/Brazilian.pm
 lib/Date/Language/Czech.pm
@@ -15,6 +17,9 @@ lib/Date/Language/German.pm
 lib/Date/Language/Greek.pm
 lib/Date/Language/Italian.pm
 lib/Date/Language/Norwegian.pm
+lib/Date/Language/Oromo.pm
+lib/Date/Language/Somali.pm
+lib/Date/Language/Tigrinya.pm
 lib/Date/Parse.pm
 lib/Time/Zone.pm
 t/date.t
