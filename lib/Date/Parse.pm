@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#15 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#16 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -17,7 +17,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = "2.24";
+$VERSION = "2.25";
 
 my %month = (
 	january		=> 0,
@@ -85,6 +85,7 @@ sub {
 
   # ignore day names
   $dtstr =~ s#([\d\w\s])[\.\,]\s#$1 #sog;
+  $dtstr =~ s/,/ /g;
   $dtstr =~ s#($daypat)\s*(den\s)?# #o;
   # Time: 12:00 or 12:00:00 with optional am/pm
   
@@ -93,7 +94,6 @@ sub {
   }
 
   unless (defined $hh) {
-
     if ($dtstr =~ s#[:\s](\d\d?):(\d\d?)(:(\d\d?)(?:\.\d+)?)?\s*(?:([ap])\.?m?\.?)?\s# #o) {
       ($hh,$mm,$ss) = ($1,$2,$4 || 0);
       $merid = $ampm{$5} if $5;
@@ -342,6 +342,11 @@ Below is a sample list of dates that are known to be parsable with Date::Parse
  1999 10:02:18 "GMT"
  16 Nov 94 22:28:20 PST 
 
+=head1 LIMITATION
+
+Date::Parse uses Time::Local internally, so is limited to only parsing dates
+which result in valid values for Time::Local::timelocal
+
 =head1 BUGS
 
 When both the month and the date are specified in the date as numbers
@@ -368,5 +373,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#15 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#16 $
 
