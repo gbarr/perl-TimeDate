@@ -48,7 +48,7 @@ use vars qw(@ISA @EXPORT $VERSION @tz_local);
 
 @ISA = qw(Exporter);
 @EXPORT = qw(tz2zone tz_local_offset tz_offset tz_name);
-$VERSION = "2.21";
+$VERSION = "2.22";
 
 # Parts stolen from code by Paul Foley <paul@ascent.com>
 
@@ -84,8 +84,9 @@ sub tz2zone (;$$$)
 		    ( [^\d+\-,] {3,} )?
 		    /x
 	    ) {
-		$TZ = $isdst ? $4 : $1;
-		$tzn_cache{$TZ} = [ $1, $4 ];
+		my $dsttz = defined($4) ? $4 : $1;
+		$TZ = $isdst ? $dsttz : $1;
+		$tzn_cache{$TZ} = [ $1, $dtstz ];
 	} else {
 		$tzn_cache{$TZ} = [ $TZ, $TZ ];
 	}
