@@ -138,10 +138,12 @@ $loop = 2;
 
 foreach (@data)
 {
- $time = int str2time($_);
+ $time = str2time($_);
 
  if(defined $time)
   {
+   $time = int $time;
+
    $x = time2str("%a %b %e %T %Y %Z",$time,'GMT');
 
    printf "%-40s\t%s\n", $_,$x,"\n";
