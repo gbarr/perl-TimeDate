@@ -7,9 +7,9 @@ package Date::Language::French;
 use Date::Language ();
 use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW $VERSION);
 @ISA = qw(Date::Language);
-$VERSION = "1.01";
+$VERSION = "1.02";
 
-@DoW = qw(dimanche lundi mardi mercredi vendredi samedi);
+@DoW = qw(dimanche lundi mardi mercredi jeudi vendredi samedi);
 @MoY = qw(janvier février mars avril mai juin 
           juillet août septembre octobre novembre décembre);
 @DoWs = map { substr($_,0,3) } @DoW;
