@@ -33,7 +33,7 @@ C<tz_name()> determines the name of the timezone based on its offset
 
 =head1 AUTHORS
 
-Graham Barr <bodg@tiuk.ti.com>
+Graham Barr <gbarr@pobox.com>
 David Muir Sharnoff <muir@idiom.com>
 Paul Foley <paul@ascent.com>
 
@@ -227,7 +227,7 @@ sub tz_offset (;$$)
 {
 	my ($zone, $time) = @_;
 
-	return &tz_local_offset() unless($zone);
+	return &tz_local_offset($time) unless($zone);
 
 	$time = time() unless $time;
 	my(@l) = localtime($time);

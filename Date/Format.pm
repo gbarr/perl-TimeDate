@@ -1,6 +1,6 @@
 # Date::Format
 #
-# Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
+# Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
 # as Perl itself.
 
@@ -121,11 +121,11 @@ category of the program's locale.
 
 =head1 AUTHOR
 
-Graham Barr <Graham.Barr@tiuk.ti.com>
+Graham Barr <gbarr@pobox.com>
 
 =head1 COPYRIGHT
 
-Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
+Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
 software; you can redistribute it and/or modify it under the same terms
 as Perl itself.
 
@@ -325,10 +325,15 @@ sub format_w { $_[0]->[6] }
 sub format_W { wkyr(1, $_[0]->[6], $_[0]->[7]) }
 sub format_y { sprintf("%02d",$_[0]->[5] % 100) }
 sub format_Y { sprintf("%04d",$_[0]->[5] + 1900) }
-sub format_Z { defined $tzname ? $tzname : uc tz_name(undef, $_[0]->[8]); }
+
+sub format_Z {
+ my $o = tz_local_offset(timelocal(@{$_[0]}[0..5]));
+ defined $tzname ? $tzname : uc tz_name($o, $_[0]->[8]);
+}
 
 sub format_z {
- my $o = defined $tzname ? tz_offset($tzname) : tz_offset();
+ my $t = timelocal(@{$_[0]}[0..5]);
+ my $o = defined $tzname ? tz_offset($tzname, $t) : tz_offset(undef,$t);
  sprintf("%+03d%02d", int($o / 3600), abs(int($o % 3600)));
 }
 
