@@ -5,8 +5,9 @@
 package Date::Language::German;
 
 use Date::Language ();
-use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW);
+use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW $VERSION);
 @ISA = qw(Date::Language);
+$VERSION = "1.01";
 
 @MoY  = qw(Januar Februar März April Mai Juni
 	   Juli August September Oktober November Dezember);
@@ -14,6 +15,7 @@ use vars qw(@ISA @DoW @DoWs @MoY @MoYs @AMPM @Dsuf %MoY %DoW);
 @DoW  = qw(Sonntag Montag Dienstag Mittwoch Donnerstag Freitag Samstag);
 @DoWs = qw(Son Mon Die Mit Don Fre Sam);
 
+require Date::Language::English;
 @AMPM =   @{Date::Language::English::AMPM};
 @Dsuf =   @{Date::Language::English::Dsuf};
 

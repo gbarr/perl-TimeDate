@@ -48,7 +48,7 @@ use vars qw(@ISA @EXPORT $VERSION @tz_local);
 
 @ISA = qw(Exporter);
 @EXPORT = qw(tz2zone tz_local_offset tz_offset tz_name);
-$VERSION = do { my @r=(q$Revision: 2.6 $=~/\d+/g); sprintf "%d."."%02d"x$#r,@r};
+$VERSION = "2.20";
 
 # Parts stolen from code by Paul Foley <paul@ascent.com>
 

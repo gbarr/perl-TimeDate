@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#2 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#3 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -17,7 +17,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = "2.11";
+$VERSION = "2.20";
 
 my %month = (
 	january		=> 0,
@@ -73,121 +73,105 @@ my $strptime = <<'ESQ';
 
  my($AM, $PM) = (0,12);
 
-sub
-{
+sub {
 
- my $dtstr = lc shift;
- my $merid = 24;
+  my $dtstr = lc shift;
+  my $merid = 24;
 
- my($year,$month,$day,$hh,$mm,$ss,$zone,$dst) = (undef) x 8;
+  my($year,$month,$day,$hh,$mm,$ss,$zone,$dst);
 
- $zone = tz_offset(shift)
-    if(@_);
+  $zone = tz_offset(shift) if @_;
 
- while(1) { last unless($dtstr =~ s#\([^\(\)]*\)# #o) }
+  1 while $dtstr =~ s#\([^\(\)]*\)# #o;
 
- $dtstr =~ s#(\A|\n|\Z)# #sog;
+  $dtstr =~ s#(\A|\n|\Z)# #sog;
 
- # ignore day names
- $dtstr =~ s#([\d\w\s])[\.\,]\s#$1 #sog;
- $dtstr =~ s#($daypat)\s*(den\s)?# #o;
- # Time: 12:00 or 12:00:00 with optional am/pm
+  # ignore day names
+  $dtstr =~ s#([\d\w\s])[\.\,]\s#$1 #sog;
+  $dtstr =~ s#($daypat)\s*(den\s)?# #o;
+  # Time: 12:00 or 12:00:00 with optional am/pm
   
- if($dtstr =~ s#[:\s](\d\d?):(\d\d)(:(\d\d)(?:\.\d+)?)?\s*([ap]\.?m\.?)?\s# #o)
-  {
-   ($hh,$mm,$ss) = ($1,$2,$4 || 0);
-   $merid = $ampm{$5} if($5);
+  if ($dtstr =~ s/(\d{4})([-:]?)(\d\d)\2(\d\d)[Tt](\d\d)([-:]?)(\d\d)\6(\d\d)/ /) {
+    ($year,$month,$day,$hh,$mm,$ss) = ($1,$3-1,$4,$5,$7,$8);
   }
+  else {
 
- # Time: 12 am
-  
- elsif($dtstr =~ s#\s(\d\d?)\s*([ap]\.?m\.?)\s# #o)
-  {
-   ($hh,$mm,$ss) = ($1,0,0);
-   $merid = $ampm{$2};
-  }
-  
- # Date: 12-June-96 (using - . or /)
-  
- if($dtstr =~ s#\s(\d\d?)([\-\./])($monpat)(\2(\d\d+))?\s# #o)
-  {
-   ($month,$day) = ($month{$3},$1);
-   $year = $5
-        if($5);
-  }
-  
- # Date: 12-12-96 (using '-', '.' or '/' )
-  
- elsif($dtstr =~ s#\s(\d\d*)([\-\./])(\d\d?)(\2(\d\d+))?\s# #o)
-  {
-   ($month,$day) = ($1 - 1,$3);
-   if($5)
-    {
-     $year = $5;
-     # Possible match for 1995-01-24 (short mainframe date format);
-     ($year,$month,$day) = ($1, $3 - 1, $5)
-    	    if($month > 12);
+    if ($dtstr =~ s#[:\s](\d\d?):(\d\d)(:(\d\d)(?:\.\d+)?)?\s*([ap]\.?m\.?)?\s# #o) {
+      ($hh,$mm,$ss) = ($1,$2,$4 || 0);
+      $merid = $ampm{$5} if $5;
     }
-  }
- elsif($dtstr =~ s#\s(\d+)\s*($sufpat)?\s*($monpat)# #o)
-  {
-   ($month,$day) = ($month{$3},$1);
-  }
- elsif($dtstr =~ s#($monpat)\s*(\d+)\s*($sufpat)?\s# #o)
-  {
-   ($month,$day) = ($month{$1},$2);
-  }
 
- # Date: 961212
-
- elsif($dtstr =~ s#\s(\d\d)(\d\d)(\d\d)\s# #o)
-  {
-   ($year,$month,$day) = ($1,$2-1,$3);
-  }
-
- $year = $1
-    if(!defined($year) && $dtstr =~ s#\s(\d{2}(\d{2})?)[\s\.,]# #o);
-
- # Zone
-
- $dst = 1
-	if $dtstr =~ s#\bdst\b##o;
-
- if($dtstr =~ s#\s"?(\w{3,})"?\s# #o) 
-  {
-   $zone = tz_offset($1);
-   return ()
-    unless(defined $zone);
-  }
- elsif($dtstr =~ s#\s(?:gmt)?(([\-\+])\d\d?)(\d\d)?\s# #o)
-  {
-   my $m = defined($3) ? $2 . $3 : 0;
-   $zone = 60 * ($m + (60 * $1));
-  }
-
- return ()
-    if($dtstr =~ /\S/o);
-
- if(defined $hh)
-  {
-   if($hh == 12)
-    {
-     $hh = 0
-	if $merid == $AM;
+    # Time: 12 am
+    
+    elsif ($dtstr =~ s#\s(\d\d?)\s*([ap]\.?m\.?)\s# #o) {
+      ($hh,$mm,$ss) = ($1,0,0);
+      $merid = $ampm{$2};
     }
-   elsif($merid == $PM)
-    {
-     $hh += 12;
+    
+    # Date: 12-June-96 (using - . or /)
+    
+    if ($dtstr =~ s#\s(\d\d?)([\-\./])($monpat)(\2(\d\d+))?\s# #o) {
+      ($month,$day) = ($month{$3},$1);
+      $year = $5 if $5;
+    }
+    
+    # Date: 12-12-96 (using '-', '.' or '/' )
+    
+    elsif ($dtstr =~ s#\s(\d\d*)([\-\./])(\d\d?)(\2(\d\d+))?\s# #o) {
+      ($month,$day) = ($1 - 1,$3);
+
+      if ($5) {
+	$year = $5;
+	# Possible match for 1995-01-24 (short mainframe date format);
+	($year,$month,$day) = ($1, $3 - 1, $5) if $month > 12;
+      }
+    }
+    elsif ($dtstr =~ s#\s(\d+)\s*($sufpat)?\s*($monpat)# #o) {
+      ($month,$day) = ($month{$3},$1);
+    }
+    elsif ($dtstr =~ s#($monpat)\s*(\d+)\s*($sufpat)?\s# #o) {
+      ($month,$day) = ($month{$1},$2);
+    }
+
+    # Date: 961212
+
+    elsif ($dtstr =~ s#\s(\d\d)(\d\d)(\d\d)\s# #o) {
+      ($year,$month,$day) = ($1,$2-1,$3);
+    }
+
+    $year = $1 if !defined($year) and $dtstr =~ s#\s(\d{2}(\d{2})?)[\s\.,]# #o;
+
+  }
+
+  # Zone
+
+  $dst = 1 if $dtstr =~ s#\bdst\b##o;
+
+  if ($dtstr =~ s#\s"?(\w{3,})"?\s# #o) {
+    $zone = tz_offset($1);
+    return unless(defined $zone);
+  }
+  elsif ($dtstr =~ s#\s(?:gmt)?(([\-\+])\d\d?)(\d\d)?\s# #o) {
+    my $m = defined($3) ? $2 . $3 : 0;
+    $zone = 60 * ($m + (60 * $1));
+  }
+
+  return if $dtstr =~ /\S/o;
+
+  if (defined $hh) {
+    if ($hh == 12) {
+      $hh = 0 if $merid == $AM;
+    }
+    elsif ($merid == $PM) {
+      $hh += 12;
     }
   }
 
- $year -= 1900
-	if(defined $year && $year > 1900);
+  $year -= 1900 if defined $year && $year > 1900;
 
- $zone += 3600
-	if(defined $zone && $dst);
+  $zone += 3600 if defined $zone && $dst;
 
- return ($ss,$mm,$hh,$day,$month,$year,$zone);
+  return ($ss,$mm,$hh,$day,$month,$year,$zone);
 }
 ESQ
 
@@ -326,5 +310,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#2 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#3 $
 

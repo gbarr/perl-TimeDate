@@ -5,8 +5,9 @@
 
 package Date::Language::Czech;
 
-use vars qw(@ISA @DoW @DoWs @MoY @MoYs @MoY2 @AMPM %MoY %DoW);
+use vars qw(@ISA @DoW @DoWs @MoY @MoYs @MoY2 @AMPM %MoY %DoW $VERSION);
 @ISA = qw(Date::Language Date::Format::Generic);
+$VERSION = "1.01";
 
 @MoY = qw(leden únor bøezen duben kvìten èerven èervenec srpen záøí
 	      øíjen listopad prosinec);
