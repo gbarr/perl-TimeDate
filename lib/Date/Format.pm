@@ -1,4 +1,4 @@
-# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#2 $
+# Date::Format $Id: //depot/TimeDate/lib/Date/Format.pm#3 $
 #
 # Copyright (c) 1995-1999 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -10,7 +10,7 @@ use     strict;
 use     vars qw(@EXPORT @ISA $VERSION);
 require Exporter;
 
-$VERSION = "2.08";
+$VERSION = "2.20";
 @ISA     = qw(Exporter);
 @EXPORT  = qw(time2str strftime ctime asctime);
 
@@ -60,10 +60,11 @@ sub asctime
 
 sub _subs
 {
+ my $fn;
  $_[1] =~ s/
-		%([%a-zA-Z])
+		%(O?[%a-zA-Z])
 	   /
-		my $m = "format_$1"; $_[0]->$m();
+                ($_[0]->can("format_$1") || sub { $1 })->($_[0]);
 	   /sgeox;
 
  $_[1];
@@ -173,6 +174,28 @@ sub wkyr {
 ## specific packages
 ##
 
+my @roman = ('',qw(I II III IV V VI VII VIII IX));
+sub roman {
+  my $n = shift;
+
+  $n =~ s/(\d)$//;
+  my $r = $roman[ $1 ];
+
+  if($n =~ s/(\d)$//) {
+    (my $t = $roman[$1]) =~ tr/IVX/XLC/;
+    $r = $t . $r;
+  }
+  if($n =~ s/(\d)$//) {
+    (my $t = $roman[$1]) =~ tr/IVX/CDM/;
+    $r = $t . $r;
+  }
+  if($n =~ s/(\d)$//) {
+    (my $t = $roman[$1]) =~ tr/IVX/M../;
+    $r = $t . $r;
+  }
+  $r;
+}
+
 sub format_a { $DoWs[$_[0]->[6]] }
 sub format_A { $DoW[$_[0]->[6]] }
 sub format_b { $MoYs[$_[0]->[4]] }
@@ -189,6 +212,7 @@ sub format_k { sprintf("%2d",$_[0]->[2]) }
 sub format_l { sprintf("%2d",$_[0]->[2] % 12 || 12)}
 sub format_m { sprintf("%02d",$_[0]->[4] + 1) }
 sub format_M { sprintf("%02d",$_[0]->[1]) }
+sub format_q { sprintf("%01d",int($_[0]->[4] / 3) + 1) }
 sub format_s { 
    $epoch = timegm(@{$_[0]}->[0..5])
 	unless defined $epoch;
@@ -224,17 +248,18 @@ sub format_x { my $f = $format{'x'}; _subs($_[0],$f); }
 sub format_X { my $f = $format{'X'}; _subs($_[0],$f); }
 sub format_C { my $f = $format{'C'}; _subs($_[0],$f); }
 
-##
-## The unused chars
-##
-
-foreach (qw(f g i q u v E F G J K L N O P Q V %))
-{
- no strict;
- next if defined &{$_};
- my $x = $_;
- *{"format_$_"} = sub { $x };
-}
+sub format_Od { roman(format_d(@_)) }
+sub format_Oe { roman(format_e(@_)) }
+sub format_OH { roman(format_H(@_)) }
+sub format_OI { roman(format_I(@_)) }
+sub format_Oj { roman(format_j(@_)) }
+sub format_Ok { roman(format_k(@_)) }
+sub format_Ol { roman(format_l(@_)) }
+sub format_Om { roman(format_m(@_)) }
+sub format_OM { roman(format_M(@_)) }
+sub format_Oq { roman(format_q(@_)) }
+sub format_Oy { roman(format_y(@_)) }
+sub format_OY { roman(format_Y(@_)) }
 
 1;
 __END__
@@ -337,6 +362,7 @@ category of the program's locale.
 	%n 	NEWLINE
 	%o	ornate day of month -- "1st", "2nd", "25th", etc.
 	%p 	AM or PM 
+	%q	Quarter number, starting with 1
 	%r 	time format: 09:05:57 PM
 	%R 	time format: 21:05
 	%s	seconds since the Epoch, UCT
