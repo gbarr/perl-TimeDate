@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#14 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#15 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -17,7 +17,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = "2.23";
+$VERSION = "2.24";
 
 my %month = (
 	january		=> 0,
@@ -91,7 +91,8 @@ sub {
   if ($dtstr =~ s/(?:^|\s)(\d{4})([-:]?)(\d\d?)\2(\d\d?)(?:[Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\6(\d\d?)(?:[.,]\d+)?)?)?)?\b/ /) {
     ($year,$month,$day,$hh,$mm,$ss) = ($1,$3-1,$4,$5,$7,$8);
   }
-  else {
+
+  unless (defined $hh) {
 
     if ($dtstr =~ s#[:\s](\d\d?):(\d\d?)(:(\d\d?)(?:\.\d+)?)?\s*(?:([ap])\.?m?\.?)?\s# #o) {
       ($hh,$mm,$ss) = ($1,$2,$4 || 0);
@@ -104,7 +105,9 @@ sub {
       ($hh,$mm,$ss) = ($1,0,0);
       $merid = $ampm{$2};
     }
+  }
     
+  unless (defined $year) {
     # Date: 12-June-96 (using - . or /)
     
     if ($dtstr =~ s#\s(\d\d?)([\-\./])($monpat)(\2(\d\d+))?\s# #o) {
@@ -365,5 +368,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#14 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#15 $
 
