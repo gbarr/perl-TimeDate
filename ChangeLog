@@ -1,3 +1,8 @@
+Tue 07 Jan 1996
+
+	o Release 1.07
+	o Fixed a problem in Time::Zone (had @l[8] instead of $l[8], doh! )
+
 Thu 02 Jan 1996
 
 	o Release 1.06

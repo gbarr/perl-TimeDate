@@ -37,10 +37,6 @@ Graham Barr <bodg@tiuk.ti.com>
 David Muir Sharnoff <muir@idiom.com>
 Paul Foley <paul@ascent.com>
 
-=head1 REVISION
-
-$Revision: 2.3 $
-
 =cut
 
 require 5.002;
@@ -52,7 +48,7 @@ use vars qw(@ISA @EXPORT $VERSION @tz_local);
 
 @ISA = qw(Exporter);
 @EXPORT = qw(tz2zone tz_local_offset tz_offset tz_name);
-$VERSION = sprintf("%d.%02d", q$Revision: 2.3 $ =~ /(\d+)\.(\d+)/);
+$VERSION = "2.04";
 
 # Parts stolen from code by Paul Foley <paul@ascent.com>
 
@@ -238,7 +234,7 @@ sub tz_offset (;$$)
 
 	$time = time() unless $time;
 	my(@l) = localtime($time);
-	my $dst = @l[8];
+	my $dst = $l[8];
 
 	$zone = lc $zone;
 
