@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#7 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#8 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -64,12 +64,9 @@ my $strptime = <<'ESQ';
  my $sufpat = join("|", reverse sort map { lc $_ } @$suf_ref);
 
  my %ampm = (
-	am => 0,
-	pm => 12
+	'a' => 0,  # AM
+	'p' => 12, # PM
 	);
-
- # allow map am +. a.m.
- map { my($z) = $_; $z =~ s#(\w)#$1\.#g; $ampm{$z} = $ampm{$_} } keys %ampm;
 
  my($AM, $PM) = (0,12);
 
@@ -96,14 +93,14 @@ sub {
   }
   else {
 
-    if ($dtstr =~ s#[:\s](\d\d?):(\d\d?)(:(\d\d?)(?:\.\d+)?)?\s*([ap]\.?m\.?)?\s# #o) {
+    if ($dtstr =~ s#[:\s](\d\d?):(\d\d?)(:(\d\d?)(?:\.\d+)?)?\s*(?:([ap])\.?m?\.?)?\s# #o) {
       ($hh,$mm,$ss) = ($1,$2,$4 || 0);
       $merid = $ampm{$5} if $5;
     }
 
     # Time: 12 am
     
-    elsif ($dtstr =~ s#\s(\d\d?)\s*([ap]\.?m\.?)\s# #o) {
+    elsif ($dtstr =~ s#\s(\d\d?)\s*([ap])\.?m?\.?\s# #o) {
       ($hh,$mm,$ss) = ($1,0,0);
       $merid = $ampm{$2};
     }
@@ -367,5 +364,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#7 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#8 $
 
