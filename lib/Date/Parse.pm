@@ -1,4 +1,4 @@
-# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#21 $
+# Date::Parse $Id: //depot/TimeDate/lib/Date/Parse.pm#22 $
 #
 # Copyright (c) 1995 Graham Barr. All rights reserved. This program is free
 # software; you can redistribute it and/or modify it under the same terms
@@ -17,7 +17,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = "2.26";
+$VERSION = "2.27";
 
 my %month = (
 	january		=> 0,
@@ -238,6 +238,9 @@ sub str2time
  $mm    ||= 0;
  $ss    ||= 0;
 
+ my $frac = $ss - int($ss);
+ $ss = int $ss;
+
  $month = $lt[4]
 	unless(defined $month);
 
@@ -277,7 +280,7 @@ sub str2time
      	        ne join("",(localtime(-1))[0..5]);
  }
 
- return $result;
+ return $result + $frac;
 }
 
 1;
@@ -372,5 +375,5 @@ as Perl itself.
 
 =cut
 
-# $Id: //depot/TimeDate/lib/Date/Parse.pm#21 $
+# $Id: //depot/TimeDate/lib/Date/Parse.pm#22 $
 
