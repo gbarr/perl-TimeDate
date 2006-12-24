@@ -156,6 +156,7 @@ CONFIG: {
 	    "cdt"  =>   -5*3600,  	 # Central Daylight
 	    "mdt"  =>   -6*3600,  	 # Mountain Daylight
 	    "pdt"  =>   -7*3600,  	 # Pacific Daylight
+	    "akdt" =>   -8*3600,         # Alaska Daylight
 	    "ydt"  =>   -8*3600,  	 # Yukon Daylight
 	    "hdt"  =>   -9*3600,  	 # Hawaii Daylight
 	    "bst"  =>   +1*3600,  	 # British Summer   
@@ -196,6 +197,7 @@ CONFIG: {
 	    "cst"       =>  -6*3600,	 # Central Standard
 	    "mst"       =>  -7*3600,	 # Mountain Standard
 	    "pst"       =>  -8*3600,	 # Pacific Standard
+	    "akst"      =>  -9*3600,     # Alaska Standard
 	    "yst"	=>  -9*3600,	 # Yukon Standard
 	    "hst"	=> -10*3600,	 # Hawaii Standard
 	    "cat"	=> -10*3600,	 # Central Alaska
