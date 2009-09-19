@@ -1,20 +1,23 @@
 # This -*- perl -*- script makes the Makefile
-# $Id: //depot/TimeDate/Makefile.PL#11 $
-
-#--- Distribution section ---
-
-$DISTNAME = 'TimeDate';
-$VERSION  = "1.16";
-
-#--- Write the Makefile
 
 BEGIN { require 5.004 }
 
+use strict;
+use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-	VERSION   => $VERSION,
-	NAME      => $DISTNAME,
+  NAME    => 'TimeDate',
+  AUTHOR  => 'Graham Barr <gbarr@pobox.com>',
+  VERSION => '1.17',
+  (eval { ExtUtils::MakeMaker->VERSION(6.21) } ? (LICENSE => 'perl') : ()),
+  ( eval { ExtUtils::MakeMaker->VERSION(6.46) } ? (
+      META_MERGE => {
+        resources => {    ##
+          repository => 'http://github.com/gbarr/perl-TimeDate',
+        },
+      }
+      )
+    : ()
+  ),
 );
-
-

@@ -1,7 +1,4 @@
 ChangeLog
-MANIFEST
-Makefile.PL
-README
 lib/Date/Format.pm
 lib/Date/Language.pm
 lib/Date/Language/Afar.pm
@@ -37,6 +34,10 @@ lib/Date/Language/TigrinyaEthiopian.pm
 lib/Date/Language/Turkish.pm
 lib/Date/Parse.pm
 lib/Time/Zone.pm
+Makefile.PL
+MANIFEST
+README
+t/cpanrt.t
 t/date.t
 t/format.t
 t/getdate.t

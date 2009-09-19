@@ -1,0 +1,13 @@
+MANIFEST.SKIP
+^\.git/
+.gitignore
+blib\b
+cover_db
+^Makefile$
+^Makefile.old$
+\.bak$
+\.bs$
+\.[oc]$
+^arch.txt$
+^TimeDate-
+^_dev

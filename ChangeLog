@@ -1,3 +1,29 @@
+1.17 -- Sat Sep 19 10:56:12 CDT 2009
+
+Bugfixes
+  * RT#45067: Date::Format with %z gives wrong results for half-hour timezones (Ernesto Hernández-Novich)
+  * RT#48164: Date::Parse unable to set seconds correctly
+  * RT#17396: Parse error for french date with 'mars' (march) as month
+
+Documentation
+  * Fixed documentation for %e in Date::Format
+  * Update documentation to remove Date::Format->language
+
+Enhancements
+  * Add support for dates like Jul-13-1999 (Brett Warden)
+  * Added Icelandic language (Tomas Edwardsson)
+  * Added Romanian language (Doru Petrescu)
+  * Added Russian language (Denis Poznyakov & Danil Pismenny)
+  * Added Turkish language (Burak Gursoy)
+  * Added Spanish language (Adrian Mugnolo)
+  * Added Chinese language (Kang-min Liu)
+  * Support parsing dates like 2002-02-26-10:37:21.141 as used by lpd
+  * Support Z timezone when only the time is specified
+  * Added METDST to Time::Zone
+  * Added AKST/AKDT to Time::Zone
+
+Changes prior to 1.17
+
 Change 814 on 2003/06/03 by <gbarr@pobox.com> (Graham Barr)
 
 	Date::Parse
