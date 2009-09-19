@@ -95,7 +95,7 @@ sub {
 
   unless (defined $hh) {
     if ($dtstr =~ s#[:\s](\d\d?):(\d\d?)(:(\d\d?)(?:\.\d+)?)?(z)?\s*(?:([ap])\.?m?\.?)?\s# #o) {
-      ($hh,$mm,$ss) = ($1,$2,$4 || 0);
+      ($hh,$mm,$ss) = ($1,$2,$4);
       $zone = 0 if $5;
       $merid = $ampm{$6} if $6;
     }
