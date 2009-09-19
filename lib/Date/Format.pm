@@ -234,7 +234,7 @@ sub format_Z {
 sub format_z {
  my $t = timelocal(@{$_[0]}[0..5]);
  my $o = defined $tzname ? tz_offset($tzname, $t) : tz_offset(undef,$t);
- sprintf("%+03d%02d", int($o / 3600), abs(int($o % 3600)));
+ sprintf("%+03d%02d", int($o / 3600), int(abs($o) % 3600) / 60);
 }
 
 sub format_c { &format_x . " " . &format_X }
