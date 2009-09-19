@@ -100,12 +100,17 @@ Date::Language - Language specific date formating and parsing
 
 L<Date::Language> provides objects to parse and format dates for specific languages. Available languages are
 
-  Afar            Czech           Gedeo           Oromo           Somali            Turkish
-  Amharic         Danish          German          Romanian        Spanish
-  Austrian        Dutch           Greek           Russian         Swedish
-  Brazilian       English         Icelandic       Russian_cp1251  Tigrinya
-  Chinese         Finnish         Italian         Russian_koi8r   TigrinyaEritrean
-  Chinese_GB      French          Norwegian       Sidama          TigrinyaEthiopian
+  Afar                    French                  Russian_cp1251
+  Amharic                 Gedeo                   Russian_koi8r
+  Austrian                German                  Sidama
+  Brazilian               Greek                   Somali
+  Chinese                 Hungarian               Spanish
+  Chinese_GB              Icelandic               Swedish
+  Czech                   Italian                 Tigrinya
+  Danish                  Norwegian               TigrinyaEritrean
+  Dutch                   Oromo                   TigrinyaEthiopian
+  English                 Romanian                Turkish
+  Finnish                 Russian
 
 =head1 METHODS
 
