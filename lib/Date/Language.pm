@@ -81,3 +81,59 @@ sub str2time
 }
 
 1;
+
+__END__
+
+
+=head1 NAME
+
+Date::Language - Language specific date formating and parsing
+
+=head1 SYNOPSIS
+
+  use Date::Language;
+
+  my $lang = Date::Language->new('German');
+  $lang->time2str("%a %b %e %T %Y\n", time);
+
+=head1 DESCRIPTION
+
+L<Date::Language> provides objects to parse and format dates for specific languages. Available languages are
+
+  Afar            Czech           Gedeo           Oromo           Somali            Turkish
+  Amharic         Danish          German          Romanian        Spanish
+  Austrian        Dutch           Greek           Russian         Swedish
+  Brazilian       English         Icelandic       Russian_cp1251  Tigrinya
+  Chinese         Finnish         Italian         Russian_koi8r   TigrinyaEritrean
+  Chinese_GB      French          Norwegian       Sidama          TigrinyaEthiopian
+
+=head1 METHODS
+
+=over
+
+=item time2str
+
+See L<Date::Format/time2str>
+
+=item strftime
+
+See L<Date::Format/strftime>
+
+=item ctime
+
+See L<Date::Format/ctime>
+
+=item asctime
+
+See L<Date::Format/asctime>
+
+=item str2time
+
+See L<Date::Parse/str2time>
+
+=item strptime
+
+See L<Date::Parse/strptime>
+
+=back
+

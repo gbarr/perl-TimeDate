@@ -322,17 +322,10 @@ conversion specification C<"%a %b %e %T %Y\n">
 
 =head1 MULTI-LANGUAGE SUPPORT
 
-Date::Format is capable of formating into several languages, these are
-English, French, German and Italian. Changing the language is done via
-a static method call, for example
+Date::Format is capable of formating into several languages by creating
+a language specific object and calling methods, see L<Date::Language>
 
-	Date::Format->language('German');
-
-will change the language in which all subsequent dates are formatted.
-
-This is only a first pass, I am considering changing this to be
-
-	$lang = Date::Language->new('German');
+	my $lang = Date::Language->new('German');
 	$lang->time2str("%a %b %e %T %Y\n", time);
 
 I am open to suggestions on this.
