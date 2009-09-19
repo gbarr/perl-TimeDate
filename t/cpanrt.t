@@ -1,7 +1,7 @@
 use Date::Format qw(time2str);
 use Date::Parse qw(strptime);
 
-print "1..4\n";
+print "1..5\n";
 
 my $i = 1;
 
@@ -26,4 +26,18 @@ my $i = 1;
     print "ok ", $i++, "\n";
   }
 }
+
+{    # RT#17396: Parse error for french date with 'mars' (march) as month
+  use Date::Language;
+  my $dateP     = Date::Language->new('French');
+  my $timestamp = $dateP->str2time('4 mars 2005');
+  my ($ss, $mm, $hh, $day, $month, $year, $zone) = localtime $timestamp;
+  $month++;
+  $year += 1900;
+  my $date = "$day/$month/$year";
+  print "# $date\n";
+  print "not " unless $date eq "4/3/2005";
+  print "ok ", $i++, "\n";
+}
+
 
