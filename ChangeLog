@@ -1,3 +1,8 @@
+1.18 -- Thu Sep 24 17:43:28 CDT 2009
+
+  * RT#49963 Skip pre 1970 date tests on Win32
+  * Added Date::Language::Hungarian (Konrad Lorinczi)
+
 1.17 -- Sat Sep 19 10:56:12 CDT 2009
 
 Bugfixes
