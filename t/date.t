@@ -5,12 +5,12 @@ use Date::Format qw(time2str);
 
 $data = qq!1995-01-24
 1995-01-24T09:08:17.1823213
-1935-01-24T09:08:17
-Fri Dec 17 00:00:00 1901 GMT
+- 1935-01-24T09:08:17
+- Fri Dec 17 00:00:00 1901 GMT
 Tue Jan 16 23:59:59 2038 GMT
 2001-02-02 00:00:00 GMT
 2035-02-02 00:00:00 GMT
-16 Jun 33 07:29:35 CST 
+- 16 Jun 33 07:29:35 CST 
 2002-02-26-10:37:21.141 GMT
 Wed, 16 Jun 94 07:29:35 CST 
 Wed, 16 Nov 94 07:29:35 CST 
@@ -162,6 +162,13 @@ $loop = 2;
 
 foreach (@data)
 {
+ my $pre_1970 = s/^-\s*//;
+
+ if ($pre_1970 and $^O eq "MSWin32") {
+   print "ok ",$loop++," # skip\n";
+   next;
+ }
+
  $time = str2time($_);
 
  if(defined $time)
