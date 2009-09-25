@@ -1,3 +1,7 @@
+1.19 -- Fri Sep 25 13:59:41 CDT 2009
+
+  * Replace Date::Language::Hungarian with version from CPAN by Lee Goddard
+
 1.18 -- Thu Sep 24 17:43:28 CDT 2009
 
   * RT#49963 Skip pre 1970 date tests on Win32
