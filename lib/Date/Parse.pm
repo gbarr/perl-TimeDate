@@ -312,7 +312,7 @@ C<Date::Parse> provides two routines for parsing date strings into time values.
 
 C<str2time> parses C<DATE> and returns a unix time value, or undef upon failure.
 C<ZONE>, if given, specifies the timezone to assume when parsing if the
-date string does not specify a timezome.
+date string does not specify a timezone.
 
 =item strptime(DATE [, ZONE])
 
