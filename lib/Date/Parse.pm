@@ -15,7 +15,7 @@ use Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(&strtotime &str2time &strptime);
 
-$VERSION = "2.29";
+$VERSION = "2.30";
 
 my %month = (
 	january		=> 0,
@@ -261,7 +261,7 @@ sub str2time
  if (defined $zone) {
    $result = eval {
      local $SIG{__DIE__} = sub {}; # Ick!
-     timegm($ss,$mm,$hh,$day,$month,$year+1900);
+     timegm($ss,$mm,$hh,$day,$month,$year);
    };
    return undef
      if !defined $result
@@ -273,7 +273,7 @@ sub str2time
  else {
    $result = eval {
      local $SIG{__DIE__} = sub {}; # Ick!
-     timelocal($ss,$mm,$hh,$day,$month,$year+1900);
+     timelocal($ss,$mm,$hh,$day,$month,$year);
    };
    return undef
      if !defined $result
