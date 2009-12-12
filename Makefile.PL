@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
   NAME    => 'TimeDate',
   AUTHOR  => 'Graham Barr <gbarr@pobox.com>',
-  VERSION => '1.19',
+  VERSION => '1.20',
   (eval { ExtUtils::MakeMaker->VERSION(6.21) } ? (LICENSE => 'perl') : ()),
   ( eval { ExtUtils::MakeMaker->VERSION(6.46) } ? (
       META_MERGE => {

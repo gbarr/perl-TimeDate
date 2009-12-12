@@ -36,7 +36,7 @@ lib/Date/Language/Turkish.pm
 lib/Date/Parse.pm
 lib/Time/Zone.pm
 Makefile.PL
-MANIFEST
+MANIFEST			This list of files
 README
 t/cpanrt.t
 t/date.t

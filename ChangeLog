@@ -1,3 +1,9 @@
+1.20 -- Sat Dec 12 06:38:14 CST 2009
+
+  * Typo => s/timezome/timezone/ [yanick]
+  * RT#52387 Fix %s formating to use timelocal when no timezone is given
+  * RT#51664 fix str2time('16 Oct 09') to not give a negative result
+
 1.19 -- Fri Sep 25 13:59:41 CDT 2009
 
   * Replace Date::Language::Hungarian with version from CPAN by Lee Goddard
