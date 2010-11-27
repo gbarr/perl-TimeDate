@@ -5,6 +5,7 @@ lib/Date/Language/Afar.pm
 lib/Date/Language/Amharic.pm
 lib/Date/Language/Austrian.pm
 lib/Date/Language/Brazilian.pm
+lib/Date/Language/Bulgarian.pm
 lib/Date/Language/Chinese.pm
 lib/Date/Language/Chinese_GB.pm
 lib/Date/Language/Czech.pm

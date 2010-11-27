@@ -1,13 +1,9 @@
-
+use Test::More tests => 202;
 use Date::Format qw(ctime time2str);
 use Date::Language;
-
-print "1..152\n";
-
-my $i = 1;
-
+use utf8;
+my ($pkg, $t,$language);
 $pkg = 'Date::Format::Generic';
-
 while(<DATA>) {
   chomp;
   if (/^(\d+)/) {
@@ -15,14 +11,14 @@ while(<DATA>) {
     next;
   }
   elsif (/^(\w+)/) {
-    $pkg = Date::Language->new($1);
+    $language = $1;
+    $pkg = Date::Language->new($language);
     next;
   }
 
   my($fmt,$res) = split(/\t+/,$_);
   my $str = $pkg->time2str($fmt,$t,'GMT');
-  print "# '$fmt'$res'$str'\nnot " unless $str eq $res;
-  print "ok ",$i++,"\n";
+    is($str, $res,"$fmt");
 }
 
 __DATA__
@@ -180,5 +176,57 @@ Italian
 %Oq	III
 %OY	MCMXCIX
 %Oy	XCIX
-316051200	# Mon Jan  7 00:00:00 1980 GMT
-%G	0
+316648800	# Wed Jan  14 00:00:00 1980
+%G	1	#0 is interpreted as empty string
+Bulgarian
+1283926923 # ср сеп  8 09:22:03 EET 2010 /Tue Sep 06:22:03 GMT 2010
+%y	10
+%Y	2010
+%%	%
+%a	ср
+%A	сряда
+%b	сеп
+%B	септември
+%c	09/08/10 06:22:03
+%C	ср сеп  8 06:22:03 GMT 2010
+%d	08
+%e	 8
+%D	09/08/10
+%G	1600
+%h	сеп
+%H	06
+%I	06
+%j	251
+%k	 6
+%l	 6
+%L	9
+%m	09
+%M	22
+%o	 8ми
+%p	AM
+%q	3
+%r	06:22:03 AM
+%R	06:22
+%s	1283926923
+%S	03
+%T	06:22:03
+%U	36
+%w	3
+%W	36
+%x	09/08/10
+%X	06:22:03
+%Z	GMT
+%z	+0000
+%z	+0000
+%Od	VIII
+%Oe	VIII
+%OH	VI
+%OI	VI
+%Oj	CCLI
+%Ok	VI
+%Ol	VI
+%Om	IX
+%OM	XXII
+%Oq	III
+%OY	MMX
+%Oy	X

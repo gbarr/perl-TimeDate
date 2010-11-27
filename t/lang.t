@@ -6,7 +6,7 @@ use  Date::Language;
 my $time = time;
 my $v;
 
-my @lang = qw(English German Italian);
+my @lang = qw(English German Italian Bulgarian);
 
 print "1..", scalar(@lang),"\n";
 
