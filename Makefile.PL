@@ -7,9 +7,10 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-  NAME    => 'TimeDate',
-  AUTHOR  => 'Graham Barr <gbarr@pobox.com>',
-  VERSION => '1.20',
+  NAME     => 'Date::Parse',
+  DISTNAME => 'TimeDate',
+  AUTHOR   => 'Graham Barr <gbarr@pobox.com>',
+  VERSION_FROM => 'lib/Date/Parse.pm',
   (eval { ExtUtils::MakeMaker->VERSION(6.21) } ? (LICENSE => 'perl') : ()),
   ( eval { ExtUtils::MakeMaker->VERSION(6.46) } ? (
       META_MERGE => {

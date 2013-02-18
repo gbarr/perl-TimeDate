@@ -11,3 +11,5 @@ cover_db
 ^arch.txt$
 ^TimeDate-
 ^_dev
+.*.swp
+MYMETA.*
