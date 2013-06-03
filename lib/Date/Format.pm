@@ -169,7 +169,7 @@ sub wkyr {
 }
 
 ##
-## these 6 formatting routins need to be *copied* into the language
+## these 6 formatting routines need to be *copied* into the language
 ## specific packages
 ##
 

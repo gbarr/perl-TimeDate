@@ -5,7 +5,7 @@
 # This is a just-because-I-stumbled-across-it
 # -and-my-wife-is-Hungarian release: if Graham or
 # someone adds to docs to Date::Format, I'd be
-# glad to correct bugs and extend as neeed.
+# glad to correct bugs and extend as needed.
 #
 
 package Date::Language::Hungarian;

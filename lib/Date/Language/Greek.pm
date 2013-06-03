@@ -4,7 +4,7 @@
 ## Traditional date format is: DoW DD{eta} MoY Year (%A %o %B %Y)
 ##
 ## Matthew Musgrove <muskrat@mindless.com>
-## Translations gratiously provided by Menelaos Stamatelos <men@kwsn.net>
+## Translations graciously provided by Menelaos Stamatelos <men@kwsn.net>
 ## This module returns unicode (utf8) encoded characters.  You will need to
 ## take the necessary steps for this to display correctly.
 ##
