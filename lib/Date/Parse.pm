@@ -93,6 +93,13 @@ sub {
     ($year,$month,$day,$hh,$mm,$ss,$frac) = ($1,$3-1,$4,$5,$7,$8,$9);
   }
 
+  # default C++ boost timestamp is effectively %Y-%b-%d %H:%M:%S.%f 
+  # details: https://svn.boost.org/trac/boost/ticket/8839
+  if ($dtstr =~ s/\s(\d{4})([-:]?)(\w{3,})\2(\d\d?)(?:[-Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\6(\d\d?)(?:[.,](\d+))?)?)?)?(?=\D)/ /) {
+    ($year,$month,$day,$hh,$mm,$ss,$frac) = ($1,$month{$3},$4,$5,$7,$8,$9);
+  }
+
+
   unless (defined $hh) {
     if ($dtstr =~ s#[:\s](\d\d?):(\d\d?)(:(\d\d?)(?:\.\d+)?)?(z)?\s*(?:([ap])\.?m?\.?)?\s# #o) {
       ($hh,$mm,$ss) = ($1,$2,$4);
