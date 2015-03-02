@@ -22,7 +22,7 @@ my $i = 1;
     my @t = strptime($str);
     my $t = join ":", map { defined($_) ? $_ : "-" } @t;
     print "# $str => $t\n";
-    print "not " unless $t eq "-:35:22:30:10:108:3600";
+    print "not " unless $t eq "-:35:22:30:10:108:3600:20";
     print "ok ", $i++, "\n";
   }
 }
