@@ -322,6 +322,8 @@ if they could be extracted from the date string. The C<$zone> element is
 the timezone offset in seconds from GMT. An empty array is returned upon
 failure.
 
+=back
+
 =head1 MULTI-LANGUAGE SUPPORT
 
 Date::Parse is capable of parsing dates in several languages, these include
